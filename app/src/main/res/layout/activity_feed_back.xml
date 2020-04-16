@@ -9,30 +9,30 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/edt_name"
-        android:text="name"/>
+        android:id="@+id/editName"
+        android:hint="Enter your name"/>
 
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_below="@id/edt_name"
+        android:layout_below="@id/editName"
         android:layout_height="wrap_content"
-        android:text="feedback"
-        android:id="@+id/edt_feedback"/>
+        android:hint="Comment here please"
+        android:id="@+id/editFeedback"/>
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_below="@id/edt_feedback"
-        android:id="@+id/btn_submit"
+        android:layout_below="@id/editFeedback"
+        android:id="@+id/btnSubmit"
         android:layout_height="wrap_content"
         android:text="submit"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_submit"
+        android:layout_below="@id/btnSubmit"
         android:text="feedbacks"
-        android:id="@+id/btn_feedbacks"
+        android:id="@+id/btnFeedback"/>
 
 
 </RelativeLayout>
