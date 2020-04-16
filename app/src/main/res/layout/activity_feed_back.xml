@@ -7,32 +7,36 @@
     tools:context=".FeedBackActivity">
 
     <EditText
+        android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editName"
-        android:hint="Enter your name"/>
+        android:layout_centerInParent="true"
+        android:hint="Enter your name" />
 
 
     <EditText
+        android:id="@+id/editFeedback"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/editName"
-        android:layout_height="wrap_content"
-        android:hint="Comment here please"
-        android:id="@+id/editFeedback"/>
+        android:layout_centerHorizontal="true"
+        android:hint="Comment here please" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_below="@id/editFeedback"
         android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="submit"/>
+        android:layout_below="@id/editFeedback"
+        android:layout_centerHorizontal="true"
+        android:text="submit" />
 
     <Button
+        android:id="@+id/btnFeedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnSubmit"
-        android:text="feedbacks"
-        android:id="@+id/btnFeedback"/>
+        android:layout_centerHorizontal="true"
+        android:text="feedbacks" />
 
 
 </RelativeLayout>

@@ -22,67 +22,63 @@ public class FeedBackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
-
         myDb = new UserReview(this);
-
         btnSubmit = findViewById(R.id.btnSubmit);
         btnFeedback = findViewById(R.id.btnFeedback);
         editName = findViewById(R.id.editName);
-        editFeedback =findViewById(R.id.editFeedback);
-
+        editFeedback = findViewById(R.id.editFeedback);
         SubmitReview();
         viewFeedbacks();
-
-
-
-
     }
-    public void SubmitReview(){
+
+    public void SubmitReview() {
         btnSubmit.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean isInserted = myDb.insertData(editName.getText().toString(),
-                                editFeedback.getText().toString());
-                        if(isInserted == true)
-                            Toast.makeText(FeedBackActivity.this, "Review Submitted Successfully!! Thanks =)",Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(FeedBackActivity.this,"Please submit your feedback :(",Toast.LENGTH_LONG).show();
-
+                        if (editName.getText().toString().matches("") && editFeedback.getText().toString().matches("")) {
+                            Toast.makeText(FeedBackActivity.this, "Please enter details first!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            boolean isInserted = myDb.insertData(editName.getText().toString(),
+                                    editFeedback.getText().toString());
+                            if (isInserted == true)
+                                Toast.makeText(FeedBackActivity.this, "Review Submitted Successfully!! Thanks =)", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(FeedBackActivity.this, "Please submit your feedback :(", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
         );
     }
 
-    public void viewFeedbacks(){
+    public void viewFeedbacks() {
         btnFeedback.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Cursor res = myDb.readFeedbacks();
-                        if(res.getCount() == 0){
+                        if (res.getCount() == 0) {
                             //show message
-                            showMessage("Error","No Feedbacks Found");
+                            showMessage("Error", "No Feedbacks Found");
                             return;
                         }
                         StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()){
-                            buffer.append("Name: "+res.getString(1)+"\n");
-                            buffer.append("Feedback: "+res.getString(2)+"\n\n");
+                        while (res.moveToNext()) {
+                            buffer.append("Name: " + res.getString(1) + "\n");
+                            buffer.append("Feedback: " + res.getString(2) + "\n\n");
                         }
                         // show all data
-                        showMessage("Feedbacks Found !",buffer.toString());
+                        showMessage("Feedbacks Found !", buffer.toString());
                     }
                 }
         );
     }
 
-    public void showMessage(String title, String message){
-        AlertDialog.Builder builder =  new AlertDialog.Builder(this);
+    public void showMessage(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
-
     }
 }
