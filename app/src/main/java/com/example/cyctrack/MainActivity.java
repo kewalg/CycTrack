@@ -97,44 +97,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         }
-
-
-        /*public void onClick (View v)
-        {*/
-          /*  switch (v.getId()) {
-                case R.id.btn_submit_location:
-                    EditText addressField = (EditText) findViewById(R.id.edt_location);
-                    String address = addressField.getText().toString();
-
-                    List<Address> addressList = null;
-                    MarkerOptions userMarkerOptions = new MarkerOptions();
-                    if (!TextUtils.isEmpty(address)) {
-                        Geocoder geocoder = new Geocoder(this);
-                        try {
-                            addressList = geocoder.getFromLocationName(address, 6);
-                            if (addressList != null) {
-                                for (int i = 0; i < addressList.size(); i++) {
-                                    Address userAddress = addressList.get(i);
-                                    LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
-                                    userMarkerOptions.position(latLng);
-                                    userMarkerOptions.title(address);
-                                    mMap.addMarker(userMarkerOptions);
-                                    //mMap.addMarker(new MarkerOptions().position(latLng).title("User Location"));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
-                                }
-                            } else {
-                                Toast.makeText(MainActivity.this, "Location not found!", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Toast.makeText(MainActivity.this, "Please enter a address!", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-            }
-        }*/
     }
 
     @Override
@@ -146,7 +108,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-             //   Toast.makeText(MainActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -176,7 +137,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             } else {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                mMap.clear();
+                //mMap.clear();
                 LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(userLocation).title("User Location"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
@@ -199,6 +160,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         if (addressList != null) {
                             for (int i = 0; i < addressList.size(); i++) {
                                 Address userAddress = addressList.get(i);
+                                mMap.clear();
                                 LatLng latLng = new LatLng(userAddress.getLatitude(), userAddress.getLongitude());
                                 userMarkerOptions.position(latLng);
                                 userMarkerOptions.title(address);
