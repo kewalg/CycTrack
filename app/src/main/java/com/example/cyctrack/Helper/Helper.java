@@ -13,16 +13,16 @@ public class Helper {
     public Helper() {
     }
 
-    public String getHTTPData(String urlString){
+    public String getHTTPData(String urlString) {
         try {
             URL url = new URL(urlString);
-            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-            if(httpURLConnection.getResponseCode() == 200) // OK - 200
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            if (httpURLConnection.getResponseCode() == 200) // OK - 200
             {
                 BufferedReader r = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                 StringBuilder sb = new StringBuilder();
                 String line;
-                while((line = r.readLine())!=null)
+                while ((line = r.readLine()) != null)
                     sb.append(line);
                 stream = sb.toString();
                 httpURLConnection.disconnect();
@@ -34,6 +34,6 @@ public class Helper {
             e.printStackTrace();
         }
 
-        return  stream;
+        return stream;
     }
-}}
+}

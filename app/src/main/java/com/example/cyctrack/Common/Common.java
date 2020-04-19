@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Common {
     public static String API_KEY = "fecdfbb9caed6cd79337443d7e7b0ad6";
-    public static String API_LINK = "http://api.openweathermap.org/data/2.5/weather";
+    public static String API_LINK = "https://api.openweathermap.org/data/2.5/weather";
 
     @org.jetbrains.annotations.NotNull
     public static String apiRequest(String lat, String lng){

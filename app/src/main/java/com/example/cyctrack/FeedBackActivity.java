@@ -36,7 +36,7 @@ public class FeedBackActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (editName.getText().toString().matches("") && editFeedback.getText().toString().matches("")) {
+                        if (editName.getText().toString().matches("") || editFeedback.getText().toString().matches("")) {
                             Toast.makeText(FeedBackActivity.this, "Please enter details!", Toast.LENGTH_SHORT).show();
                         } else {
                             boolean isInserted = myDb.insertData(editName.getText().toString(),
