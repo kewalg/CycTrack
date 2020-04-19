@@ -123,8 +123,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         if (task.isSuccessful()) {
                             Log.d("Message", "Found location");
                             Location currentLocation = (Location) task.getResult();
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 18), 1000, null);
+                            // moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
 
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
                         } else {
                             Log.d("Message", "Current location is null");
                             Toast.makeText(MapsActivity.this, "unable to get location!", Toast.LENGTH_SHORT).show();
