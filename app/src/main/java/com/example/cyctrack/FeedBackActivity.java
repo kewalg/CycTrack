@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 public class FeedBackActivity extends AppCompatActivity {
     UserReview myDb;
-
     Button btnSubmit;
     Button btnFeedback;
     EditText editName;
@@ -81,4 +80,6 @@ public class FeedBackActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
     }
+
+
 }

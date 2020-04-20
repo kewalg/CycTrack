@@ -22,7 +22,9 @@ import android.media.MediaDataSource;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +56,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return;
             }
             mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            //mMap.getUiSettings().setMyLocationButtonEnabled(false);
             init();
         }
     }
@@ -79,7 +81,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        //map related code
         mSearchtext = findViewById(R.id.input_search);
         getLocationPermission();
     }
@@ -116,7 +117,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getDeviceLocation() {
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try {
             if (mLocationPermissionsGranted) {
@@ -141,7 +141,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (SecurityException e) {
             Log.e("Message", "getdevicelocation: security exception" + e.getMessage());
         }
-
     }
 
     private void moveCamera(LatLng latLng, float zoom, String title) {
@@ -194,12 +193,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
             }
-            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
+
+            //notifications
+    /*        case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
                 }
                 return;
-            }
+            }*/
         }
     }
 }
