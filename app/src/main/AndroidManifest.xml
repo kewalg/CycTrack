@@ -19,12 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SpeedOMeter"></activity>
-        <activity android:name=".ReviewActivity" />
-        <activity android:name=".SpeedActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".AddItem" />
-        <activity android:name=".MapsActivity">
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.package.name.MyActivity" />
@@ -32,7 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WeatherActivity" />
+        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".SpeedOMeter"></activity>
+        <activity android:name=".WeatherActivity"></activity>
+        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".AddItem" />
         <activity android:name=".FeedBackActivity" />
         <activity android:name=".ListItem" />
 
