@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
+<!--    <uses-feature android:name="android.hardware.location.gps" />-->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".SpeedActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +29,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".MapsActivity"></activity>
-        <activity android:name=".SpeedOMeter"></activity>
-        <activity android:name=".WeatherActivity"></activity>
-        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".MapsActivity">
+
+        </activity>
+        <activity android:name=".SpeedOMeter" />
+        <activity android:name=".WeatherActivity">
+
+
+        </activity>
+        <activity android:name=".ReviewActivity" />
         <activity android:name=".AddItem" />
         <activity android:name=".FeedBackActivity" />
         <activity android:name=".ListItem" />

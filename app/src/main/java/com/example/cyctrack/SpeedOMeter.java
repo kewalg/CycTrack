@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat;
 
 public class SpeedOMeter extends AppCompatActivity implements LocationListener {
 
-    int MY_PERMISSION =0;
+    int MY_PERMISSION = 0;
 
 
     @Override

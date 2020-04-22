@@ -20,27 +20,35 @@
 
             <ImageView
                 android:id="@+id/img_maps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_background" />
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_gravity="center"
+                android:src="@drawable/pin" />
 
             <TextView
                 android:id="@+id/tv_maps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Maps" />
+                android:layout_gravity="center"
+                android:text="Maps"
+                android:textAlignment="center"
+                android:textColor="#000000" />
 
             <ImageView
                 android:id="@+id/img_weather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_background" />
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_gravity="center"
+                android:src="@drawable/cloudy" />
 
             <TextView
                 android:id="@+id/tv_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weather" />
+                android:layout_gravity="center"
+                android:text="Weather"
+                android:textAlignment="center"
+                android:textColor="#000000" />
         </TableRow>
 
         <TableRow
@@ -52,27 +60,38 @@
 
             <ImageView
                 android:id="@+id/img_reviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_background" />
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_gravity="center"
+                android:src="@drawable/feedback" />
 
             <TextView
                 android:id="@+id/tv_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reviews" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+
+                android:text="Reviews"
+                android:textAlignment="center"
+                android:textColor="#000000" />
 
             <ImageView
                 android:id="@+id/img_speedo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_background" />
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:layout_gravity="center"
+                android:src="@drawable/dashboard" />
 
             <TextView
                 android:id="@+id/tv_speedometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Device Speed" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="Device Speed"
+                android:textAlignment="center"
+                android:textColor="#000000" />
         </TableRow>
     </TableLayout>
 

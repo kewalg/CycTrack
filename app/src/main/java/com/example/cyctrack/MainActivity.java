@@ -64,18 +64,18 @@ public class MainActivity extends AppCompatActivity {
         img_speedo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, SpeedOMeter.class);
+                Intent i = new Intent(MainActivity.this, SpeedActivity.class);
                 startActivity(i);
             }
         });
 
-     /*   //toaaccess notification service
-        NotificationManager n = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        //toaaccess notification service
+      /*  NotificationManager n = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         //permissions granted?
         if (n.isNotificationPolicyAccessGranted()) {
             n.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
-            *//*Intent i = new Intent(MainActivity.this, WeatherActivity.class);
-            startActivity(i);*//*
+            Intent i = new Intent(MainActivity.this, WeatherActivity.class);
+            startActivity(i);
         } else {
             // Ask the user to grant access
             Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
