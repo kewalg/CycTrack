@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".FeedBackActivity">
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:hint="Enter your name" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:hint="Enter your name"
+        android:textColorHint="#000000" />
 
 
     <EditText
@@ -20,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editName"
         android:layout_centerHorizontal="true"
-        android:hint="Comment here please" />
+        android:hint="Comment here please"
+        android:textColorHint="#000000" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -29,13 +33,6 @@
         android:layout_below="@id/editFeedback"
         android:layout_centerHorizontal="true"
         android:text="submit" />
-    <Button
-        android:id="@+id/btnFeedback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnSubmit"
-        android:layout_centerHorizontal="true"
-        android:text="feedbacks" />
 
 
 </RelativeLayout>

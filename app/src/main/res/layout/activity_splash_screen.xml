@@ -4,27 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".SpeedActivity">
+    android:background="#ffffff"
+    tools:context=".SplashScreen">
+
+
+    <ImageView
+        android:id="@+id/bg_splashscreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/safe_ride" />
 
     <TextView
-        android:id="@+id/tv_speed"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="0 km/h"
-        android:textColor="#000000" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/sw_metric"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_speed"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/bg_splashscreen"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:checked="true"
-        android:text="Metric Fields"
-        android:textColor="#000000" />
-
-
+        android:text="We are Safe Ride!"
+        android:textColor="#000000"
+        android:textSize="25sp" />
 </RelativeLayout>

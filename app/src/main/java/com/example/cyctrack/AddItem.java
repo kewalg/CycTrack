@@ -20,6 +20,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cyctrack.Model.Main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,18 +36,17 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.add_item);
-
-
         editName = findViewById(R.id.editName);
         editFeedback = findViewById(R.id.editFeedback);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
+
     }
 
     //This is the part where data is transafeered from Your Android phone to Sheet by using HTTP Rest API calls
 
-    private void addItemToSheet() {
 
+    private void addItemToSheet() {
         final ProgressDialog loading = ProgressDialog.show(this, "Submitting Review", "Please wait");
 
         //encrypt these editnames
@@ -58,18 +58,15 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         loading.dismiss();
                         Toast.makeText(AddItem.this, response, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 }
         ) {
@@ -85,17 +82,11 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 return parmas;
             }
         };
-
         int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
-
         RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(retryPolicy);
-
         RequestQueue queue = Volley.newRequestQueue(this);
-
         queue.add(stringRequest);
-
-
     }
 
 
@@ -104,8 +95,8 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
         if (v == btnSubmit) {
             addItemToSheet();
-
             //Define what to do when button is clicked
+
         }
     }
 }

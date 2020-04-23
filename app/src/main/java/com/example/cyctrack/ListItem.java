@@ -60,19 +60,15 @@ public class ListItem extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 }
         );
 
         int socketTimeOut = 50000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-
         stringRequest.setRetryPolicy(policy);
-
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
-
     }
 
 

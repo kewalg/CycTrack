@@ -15,27 +15,45 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.cyctrack.Model.Main;
 import com.example.cyctrack.Model.Weather;
 
 public class MainActivity extends AppCompatActivity {
+    private NotificationManager mNotificationManager;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         ImageView img_maps, img_weather, img_reviews, img_speedo;
+        Button btn_dnd;
 
         img_maps = findViewById(R.id.img_maps);
         img_weather = findViewById(R.id.img_weather);
         img_reviews = findViewById(R.id.img_reviews);
         img_speedo = findViewById(R.id.img_speedo);
 
+        btn_dnd = findViewById(R.id.btn_dnd);
+
+        btn_dnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
+                Toast.makeText(MainActivity.this, "DND Enabled!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         img_maps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //toaaccess notification service
-      /*  NotificationManager n = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+  /*      //to access notification service
+        NotificationManager n = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         //permissions granted?
         if (n.isNotificationPolicyAccessGranted()) {
             n.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE);
@@ -81,5 +99,16 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
             startActivity(intent);
         }*/
+    }
+
+    protected void changeInterruptionFiler(int interruptionFilter) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // If api level minimum 23
+            if (mNotificationManager.isNotificationPolicyAccessGranted()) {
+                mNotificationManager.setInterruptionFilter(interruptionFilter);
+            } else {
+                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                startActivity(intent);
+            }
+        }
     }
 }
