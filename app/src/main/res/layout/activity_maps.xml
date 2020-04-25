@@ -24,14 +24,24 @@
         android:elevation="10dp">
 
 
-        <ImageView
-            android:id="@+id/ic_magnify"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+        <!--        <ImageView
+                android:id="@+id/ic_magnify"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_magnify" />-->
+
+        <Button
+            android:id="@+id/btn_search_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_magnify" />
+            android:src="@drawable/ic_magnify"
+            android:text="Search" />
 
         <EditText
             android:id="@+id/input_search"
@@ -39,7 +49,7 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginRight="50dp"
-            android:layout_toRightOf="@id/ic_magnify"
+            android:layout_toRightOf="@id/btn_search_location"
             android:background="@null"
             android:hint="Enter address, city, zipcode"
             android:imeOptions="actionSearch"
@@ -48,4 +58,14 @@
 
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/my_location"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_below="@id/relLayout1"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_my_location" />
 </RelativeLayout>

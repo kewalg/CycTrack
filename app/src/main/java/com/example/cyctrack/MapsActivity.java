@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,18 +75,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     //widgets
     private EditText mSearchtext;
-
+    private ImageView my_location;
+    private Button btn_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
         mSearchtext = findViewById(R.id.input_search);
+        my_location = findViewById(R.id.my_location);
+        btn_search = findViewById(R.id.btn_search_location);
         getLocationPermission();
     }
 
-    private void init() {
+   /* private void init() {
         mSearchtext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -96,6 +99,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return false;
             }
         });
+    }*/
+
+    private void init() {
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                geoLocate();
+            }
+        });
+
+        my_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDeviceLocation();
+            }
+        });
+
     }
 
     private void geoLocate() {
@@ -111,7 +131,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (list.size() > 0) {
             Address address = list.get(0);
             Log.d("Location address", "found a location: " + address.toString());
-            Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
         }
     }
@@ -193,14 +213,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 }
             }
-
-            //notifications
-    /*        case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                } else {
-                }
-                return;
-            }*/
         }
     }
 }
