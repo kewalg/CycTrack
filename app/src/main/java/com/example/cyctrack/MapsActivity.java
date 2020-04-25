@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.inputmethod.EditorInfoCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.Manifest;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +38,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -88,24 +91,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getLocationPermission();
     }
 
-   /* private void init() {
-        mSearchtext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || event.getAction() == event.ACTION_DOWN || event.getAction() == event.KEYCODE_ENTER) {
-                    //execute our method for searching
-                    geoLocate();
-                }
-                return false;
-            }
-        });
-    }*/
-
     private void init() {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 geoLocate();
+                mSearchtext.onEditorAction(EditorInfo.IME_ACTION_DONE);
             }
         });
 
@@ -115,7 +106,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 getDeviceLocation();
             }
         });
-
     }
 
     private void geoLocate() {
@@ -148,7 +138,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Log.d("Message", "Found location");
                             Location currentLocation = (Location) task.getResult();
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 18), 1000, null);
-                            // moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
 
                         } else {
                             Log.d("Message", "Current location is null");
@@ -165,11 +154,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void moveCamera(LatLng latLng, float zoom, String title) {
         Log.d("Message", "moving the cam to : LAT: " + latLng.latitude + "LONG: " + latLng.longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18), 1000, null);
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         mMap.addMarker(options);
-
     }
 
     private void initMap() {
