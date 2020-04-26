@@ -74,7 +74,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 NavigationLauncherOptions options = NavigationLauncherOptions.builder()
                         .origin(originPosition)
                         .destination(destinationPosition)
-                        .shouldSimulateRoute(true)
+                        .shouldSimulateRoute(false)
                         .build();
                 NavigationLauncher.startNavigation(MapBoxActivity.this,options);
             }
