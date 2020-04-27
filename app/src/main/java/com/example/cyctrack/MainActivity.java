@@ -38,14 +38,18 @@ public class MainActivity extends AppCompatActivity {
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         ImageView img_maps, img_weather, img_reviews, img_speedo;
-        Button btn_dnd;
+        Button btn_dnd, btn_map, btn_weather, btn_review, btn_speedometer;
 
         img_maps = findViewById(R.id.img_maps);
         img_weather = findViewById(R.id.img_weather);
         img_reviews = findViewById(R.id.img_reviews);
         img_speedo = findViewById(R.id.img_speedo);
-
         btn_dnd = findViewById(R.id.btn_dnd);
+
+        btn_map = findViewById(R.id.btn_maps);
+        btn_weather = findViewById(R.id.btn_weather);
+        btn_review = findViewById(R.id.btn_review);
+        btn_speedometer = findViewById(R.id.btn_speedometer);
 
         btn_dnd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        img_maps.setOnClickListener(new View.OnClickListener() {
+        btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, MapsActivity.class);
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        img_weather.setOnClickListener(new View.OnClickListener() {
+        btn_weather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, WeatherActivity.class);
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        img_reviews.setOnClickListener(new View.OnClickListener() {
+        btn_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ReviewActivity.class);
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        img_speedo.setOnClickListener(new View.OnClickListener() {
+        btn_speedometer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, SpeedActivity.class);
