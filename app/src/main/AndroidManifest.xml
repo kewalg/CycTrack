@@ -20,15 +20,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SafetyActivity"></activity>
-        <activity android:name=".MapBoxActivity" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".SafetyActivity">
+
+        </activity>
+        <activity android:name=".MapBoxActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.package.name.MyActivity" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".SplashScreen">
+
         </activity>
         <activity android:name=".SpeedActivity" />
         <activity android:name=".MainActivity" />

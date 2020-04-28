@@ -99,6 +99,7 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
         strCurrentSpeed = strCurrentSpeed.replace(" ", "0");
         if (this.useMetricUnits()) {
             tv_speed.setText(strCurrentSpeed + " km/h");
+
         } else {
             tv_speed.setText(strCurrentSpeed + "miles/h");
         }
