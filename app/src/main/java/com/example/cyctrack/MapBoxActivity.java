@@ -3,12 +3,20 @@ package com.example.cyctrack;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.SeekBar;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 
 import com.mapbox.android.core.location.LocationEngine;
@@ -47,13 +55,15 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private MapView mapView;
     private MapboxMap map;
-    private Button startButton;
+    private NotificationManager mNotificationManager;
+    private Button startButton, reviewButton, speedButton;
     private PermissionsManager permissionsManager;
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
     private Location originLocation;
     private Point originPosition;
     private Point destinationPosition;
+    private ToggleButton toggleButton;
     private Marker destinationMarker;
     private NavigationMapRoute navigationMapRoute;
     private static final String TAG = "MapBoxActivity";
@@ -61,10 +71,15 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this,getString(R.string.access_token));
+        Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_map_box);
-        mapView =findViewById(R.id.mapView);
+        mapView = findViewById(R.id.mapView);
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         startButton = findViewById(R.id.startButton);
+        reviewButton = findViewById(R.id.btn_review_map);
+        speedButton = findViewById(R.id.btn_speedometer_map);
+        toggleButton = findViewById(R.id.tgl_btn_dnd);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
@@ -76,11 +91,49 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                         .destination(destinationPosition)
                         .shouldSimulateRoute(false)
                         .build();
-                NavigationLauncher.startNavigation(MapBoxActivity.this,options);
+                NavigationLauncher.startNavigation(MapBoxActivity.this, options);
             }
         });
 
+        reviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MapBoxActivity.this, ReviewActivity.class);
+                startActivity(i);
+            }
+        });
 
+        speedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MapBoxActivity.this, SpeedActivity.class);
+                startActivity(i);
+            }
+        });
+
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
+                    Toast.makeText(MapBoxActivity.this, "DND Enabled!", Toast.LENGTH_SHORT).show();
+                } else {
+                    changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_ALL);
+                    Toast.makeText(MapBoxActivity.this, "DND Disabled!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    protected void changeInterruptionFiler(int interruptionFilter) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // If api level minimum 23
+            if (mNotificationManager.isNotificationPolicyAccessGranted()) {
+                mNotificationManager.setInterruptionFilter(interruptionFilter);
+            } else {
+                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
@@ -93,11 +146,11 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
     }
 
-    private void enableLocation(){
-        if(PermissionsManager.areLocationPermissionsGranted(this)){
+    private void enableLocation() {
+        if (PermissionsManager.areLocationPermissionsGranted(this)) {
             initializeLocationEngine();
             initializeLocationLayer();
-        }else{
+        } else {
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(this);
         }
@@ -106,25 +159,26 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
 
-    private void initializeLocationEngine(){
+    private void initializeLocationEngine() {
         locationEngine = new LocationEngineProvider(this).obtainBestLocationEngineAvailable();
         locationEngine.setPriority(LocationEnginePriority.HIGH_ACCURACY);
         locationEngine.activate();
 
 
         Location lastLocation = locationEngine.getLastLocation();
-        if (lastLocation != null){
+        if (lastLocation != null) {
             originLocation = lastLocation;
             setCameraPosition(lastLocation);
-        }else{
+        } else {
             locationEngine.addLocationEngineListener(this);
 
         }
 
     }
+
     @SuppressWarnings("MissingPermission")
-    private void initializeLocationLayer(){
-        locationLayerPlugin = new LocationLayerPlugin(mapView,map,locationEngine);
+    private void initializeLocationLayer() {
+        locationLayerPlugin = new LocationLayerPlugin(mapView, map, locationEngine);
         locationLayerPlugin.setLocationLayerEnabled(true);
         locationLayerPlugin.setCameraMode(CameraMode.TRACKING);
         locationLayerPlugin.setRenderMode(RenderMode.NORMAL);
@@ -132,29 +186,29 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
 
-    private void setCameraPosition(Location location){
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()), 13.0));
+    private void setCameraPosition(Location location) {
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13.0));
 
     }
 
     @Override
     public void onMapClick(@NonNull LatLng point) {
 
-        if (destinationMarker != null){
+        if (destinationMarker != null) {
             map.removeMarker(destinationMarker);
         }
 
         destinationMarker = map.addMarker(new MarkerOptions().position(point));
-        destinationPosition = Point.fromLngLat(point.getLongitude(),point.getLatitude());
-        originPosition = Point.fromLngLat(originLocation.getLongitude(),originLocation.getLatitude());
-        getRoute(originPosition,destinationPosition);
+        destinationPosition = Point.fromLngLat(point.getLongitude(), point.getLatitude());
+        originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude());
+        getRoute(originPosition, destinationPosition);
 
         startButton.setEnabled(true);
         startButton.setBackgroundResource(R.color.mapboxBlue);
 
     }
 
-    private void getRoute(Point origin, Point destination){
+    private void getRoute(Point origin, Point destination) {
         NavigationRoute.builder()
                 .accessToken(Mapbox.getAccessToken())
                 .origin(origin)
@@ -163,20 +217,20 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 .getRoute(new Callback<DirectionsResponse>() {
                     @Override
                     public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-                        if(response.body() == null){
+                        if (response.body() == null) {
                             Log.e(TAG, "No routes found");
                             return;
-                        }else if(response.body().routes().size() == 0){
+                        } else if (response.body().routes().size() == 0) {
                             Log.e(TAG, "No routes found");
                             return;
                         }
 
                         DirectionsRoute currentRoute = response.body().routes().get(0);
 
-                        if( navigationMapRoute != null){
+                        if (navigationMapRoute != null) {
                             navigationMapRoute.removeRoute();
-                        }else{
-                            navigationMapRoute = new NavigationMapRoute(null,mapView,map);
+                        } else {
+                            navigationMapRoute = new NavigationMapRoute(null, mapView, map);
 
                         }
 
@@ -185,7 +239,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
                     @Override
                     public void onFailure(Call<DirectionsResponse> call, Throwable t) {
-                        Log.e(TAG,"Error:" +t.getMessage());
+                        Log.e(TAG, "Error:" + t.getMessage());
 
                     }
                 });
@@ -202,7 +256,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onLocationChanged(Location location) {
 
-        if (location != null){
+        if (location != null) {
             originLocation = location;
             setCameraPosition(location);
         }
@@ -219,7 +273,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onPermissionResult(boolean granted) {
 
-        if(granted){
+        if (granted) {
             enableLocation();
         }
 
@@ -228,17 +282,17 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        permissionsManager.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (locationEngine != null){
+        if (locationEngine != null) {
             locationEngine.requestLocationUpdates();
 
         }
-        if (locationLayerPlugin != null){
+        if (locationLayerPlugin != null) {
             locationLayerPlugin.onStart();
 
         }
@@ -261,10 +315,10 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void onStop() {
         super.onStop();
-        if (locationEngine != null){
+        if (locationEngine != null) {
             locationEngine.removeLocationUpdates();
         }
-        if (locationLayerPlugin != null){
+        if (locationLayerPlugin != null) {
             locationLayerPlugin.onStop();
         }
         mapView.onStop();
@@ -286,13 +340,11 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     protected void onDestroy() {
         super.onDestroy();
 
-        if (locationEngine != null){
+        if (locationEngine != null) {
             locationEngine.deactivate();
         }
         mapView.onDestroy();
     }
-
-
 
 
 }

@@ -19,37 +19,15 @@
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_Speedometer_map"
+        android:layout_above="@id/btn_speedometer_map"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:enabled="false"
         android:text="@string/start_navigating" />
 
-    <Button
-        android:id="@+id/btn_dnd_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_toRightOf="@id/btn_review_map"
-        android:text="Do Not Disturb"
-        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
-        tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/btn_review_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_toRightOf="@id/btn_Speedometer_map"
-        android:text="review"
-        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
-        mapbox:layout_constraintLeft_toRightOf="@id/btn_dnd_map"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btn_Speedometer_map"
+        android:id="@+id/btn_speedometer_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -58,6 +36,32 @@
         android:text="speedometer"
         mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
         mapbox:layout_constraintLeft_toRightOf="@id/btn_review_map"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_review_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/btn_speedometer_map"
+        android:text="review"
+        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
+        mapbox:layout_constraintLeft_toRightOf="@id/tgl_btn_dnd"
+        tools:ignore="MissingConstraints" />
+
+    <ToggleButton
+        android:id="@+id/tgl_btn_dnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/btn_review_map"
+        android:text="Do Not Disturb"
+        android:textOff="DND OFF"
+        android:textOn="DND ON"
+        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
         tools:ignore="MissingConstraints" />
 
 

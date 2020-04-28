@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -14,12 +15,15 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cyctrack.Common.Common;
 import com.example.cyctrack.Helper.Helper;
 import com.example.cyctrack.Model.OpenWeatherMap;
+import com.example.cyctrack.Model.Weather;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -30,6 +34,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
 
     TextView txtCity, txtLastUpdate, txtDescription, txtHumidity, txtTime, txtCelsius;
+    Button btnLetsRide;
     ImageView imageView;
 
     LocationManager locationManager;
@@ -52,13 +57,14 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         txtTime = (TextView) findViewById(R.id.txtTime);
         txtCelsius = (TextView) findViewById(R.id.txtCelsius);
         imageView = (ImageView) findViewById(R.id.imageView);
+        btnLetsRide = findViewById(R.id.btn_letsride);
 
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
 
 
-        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(WeatherActivity.this, new String[]{
                     Manifest.permission.INTERNET,
@@ -74,7 +80,16 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         }
         Location location = locationManager.getLastKnownLocation(provider);
         if (location == null)
-            Log.e("TAG","No Location");
+            Log.e("TAG", "No Location");
+
+
+        btnLetsRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(WeatherActivity.this, MapBoxActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 
@@ -120,7 +135,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         lat = location.getLatitude();
         lng = location.getLongitude();
 
-        new GetWeather().execute(Common.apiRequest(String.valueOf(lat),String.valueOf(lng)));
+        new GetWeather().execute(Common.apiRequest(String.valueOf(lat), String.valueOf(lng)));
 
     }
 
@@ -139,7 +154,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
     }
 
-    private class GetWeather extends AsyncTask<String,Void,String>{
+    private class GetWeather extends AsyncTask<String, Void, String> {
 
         ProgressDialog pd = new ProgressDialog(WeatherActivity.this);
 
@@ -166,21 +181,22 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s.contains("Error: Not found city")){
+            if (s.contains("Error: Not found city")) {
                 pd.dismiss();
                 return;
             }
             Gson gson = new Gson();
-            Type mType = new TypeToken<OpenWeatherMap>(){}.getType();
-            openWeatherMap = gson.fromJson(s,mType);
+            Type mType = new TypeToken<OpenWeatherMap>() {
+            }.getType();
+            openWeatherMap = gson.fromJson(s, mType);
             pd.dismiss();
 
-            txtCity.setText(String.format("%s,%s",openWeatherMap.getName(),openWeatherMap.getSys().getCountry()));
+            txtCity.setText(String.format("%s,%s", openWeatherMap.getName(), openWeatherMap.getSys().getCountry()));
             txtLastUpdate.setText(String.format("Last Updated: %s", Common.getDateNow()));
-            txtDescription.setText(String.format("%s",openWeatherMap.getWeather().get(0).getDescription()));
-            txtHumidity.setText(String.format("%d%%",openWeatherMap.getMain().getHumidity()));
-            txtTime.setText(String.format("%s/%s",Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunrise()),Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunset())));
-            txtCelsius.setText(String.format("%.2f °C",openWeatherMap.getMain().getTemp()));
+            txtDescription.setText(String.format("%s", openWeatherMap.getWeather().get(0).getDescription()));
+            txtHumidity.setText(String.format("%d%%", openWeatherMap.getMain().getHumidity()));
+            txtTime.setText(String.format("%s/%s", Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunrise()), Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunset())));
+            txtCelsius.setText(String.format("%.2f °C", openWeatherMap.getMain().getTemp()));
             Picasso.with(WeatherActivity.this)
                     .load(Common.getImage(openWeatherMap.getWeather().get(0).getIcon()))
                     .into(imageView);
