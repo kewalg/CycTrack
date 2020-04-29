@@ -4,21 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/bg2blur"
     android:orientation="vertical"
     tools:context=".WeatherActivity">
+
+    <TextView
+        android:id="@+id/titletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="Weather At Your Location:"
+        android:textColor="#fff"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/txtCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/titletext"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
+        android:layout_marginTop="20dp"
         android:text="city"
-        android:textColor="#000000"
-        android:textSize="36sp"
-        android:textStyle="bold" />
+        android:textColor="#fff"
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/txtLastUpdate"
@@ -26,19 +37,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtCity"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:text="lastupdatedon"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@id/txtLastUpdate"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/txtDescription"
@@ -46,11 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:text="description"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textColor="#fff"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/txtHumidity"
@@ -58,11 +64,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtDescription"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:text="humidity"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textColor="#fff"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/txtTime"
@@ -70,11 +74,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtHumidity"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:text="time"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textColor="#fff"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/txtCelsius"
@@ -82,11 +84,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtTime"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:text="celcius"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textColor="#fff"
+        android:textSize="30sp" />
 
 
     <Button
@@ -95,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtCelsius"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="Lets Ride" />
 
 

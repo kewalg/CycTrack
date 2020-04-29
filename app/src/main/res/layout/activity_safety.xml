@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#3a424d"
     android:orientation="vertical"
     tools:context=".SafetyActivity">
 
     <TextView
         android:id="@+id/tvHeading"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:paddingLeft="23dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         android:text="Are You Forgetting Something??"
+        android:textColor="#fff"
         android:textSize="24sp" />
 
     <ImageView
@@ -22,24 +24,24 @@
         android:layout_height="500px"
         android:layout_below="@id/tvHeading"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/safetygear" />
+        android:layout_marginTop="10dp"
+        android:src="@drawable/cycleimage" />
 
     <ListView
         android:id="@+id/checkable_list"
-        android:layout_width="fill_parent"
-        android:layout_height="309dp"
-        android:layout_below="@id/imageView2">
-
-    </ListView>
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/imageView2"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnLetsGo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/checkable_list"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:enabled="false"
-        android:text="Lets Go!"
-        tools:ignore="OnClick" />
+        android:text="Lets Go!" />
 
 </RelativeLayout>

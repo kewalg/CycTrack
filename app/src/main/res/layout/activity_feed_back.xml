@@ -4,14 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FeedBackActivity">
+    android:background="@drawable/bg2blur">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/editName"
+        android:layout_centerHorizontal="true"
+        android:text="Enter FeedBack Below:"
+        android:textColor="#fff"
+        android:textSize="25dp" />
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:hint="Enter your name" />
+        android:backgroundTint="#fff"
+        android:hint="Enter your name"
+        android:textColorHint="#fff" />
 
 
     <EditText
@@ -20,7 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editName"
         android:layout_centerHorizontal="true"
-        android:hint="Comment here please" />
+        android:backgroundTint="#fff"
+        android:hint="Enter your comments here"
+        android:textColorHint="#fff" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -28,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editFeedback"
         android:layout_centerHorizontal="true"
-        android:text="submit" />
+        android:text="Submit" />
 
     <Button
         android:id="@+id/btnFeedback"
@@ -36,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnSubmit"
         android:layout_centerHorizontal="true"
-        android:text="feedbacks" />
+        android:text="View Feedbacks" />
 
 
 </RelativeLayout>

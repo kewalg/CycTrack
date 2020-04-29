@@ -19,7 +19,7 @@
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_speedometer_map"
+        android:layout_above="@id/btn_review_map"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:enabled="false"
@@ -32,11 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="40dp"
-        android:layout_marginBottom="10dp"
-        android:text="speedometer"
-        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
-        mapbox:layout_constraintLeft_toRightOf="@id/btn_review_map"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toLeftOf="@id/btn_review_map"
+        android:text="Speed" />
 
     <Button
         android:id="@+id/btn_review_map"
@@ -44,25 +43,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_toRightOf="@id/btn_speedometer_map"
-        android:text="review"
-        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
-        mapbox:layout_constraintLeft_toRightOf="@id/tgl_btn_dnd"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginBottom="20dp"
+        android:text="review" />
 
     <ToggleButton
         android:id="@+id/tgl_btn_dnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_toRightOf="@id/btn_review_map"
         android:text="Do Not Disturb"
         android:textOff="DND OFF"
-        android:textOn="DND ON"
-        mapbox:layout_constraintBottom_toBottomOf="@+id/mapView"
-        tools:ignore="MissingConstraints" />
+        android:textOn="DND ON" />
 
 
 </RelativeLayout>

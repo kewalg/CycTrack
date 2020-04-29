@@ -37,18 +37,13 @@ public class ListItem extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_item);
-
         listView = findViewById(R.id.lv_items);
-
         getItems();
-
     }
 
 
     private void getItems() {
-
-        loading =  ProgressDialog.show(this,"Loading","please wait",false,true);
-
+        loading = ProgressDialog.show(this, "Loading", "please wait", false, true);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxzZJrl-RHe_61AfbWPH22pOSu8X_QXQrHFWQjbfiIWpJLDxP4/exec?action=getItems",
                 new Response.Listener<String>() {
                     @Override
@@ -82,29 +77,21 @@ public class ListItem extends AppCompatActivity {
 
 
             for (int i = 0; i < jarray.length(); i++) {
-
                 JSONObject jo = jarray.getJSONObject(i);
-
                 String name = jo.getString("Name");
                 String feedback = jo.getString("feedback");
-
 
                 HashMap<String, String> item = new HashMap<>();
                 item.put("Name", name);
                 item.put("feedback", feedback);
-
                 list.add(item);
-
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-        adapter = new SimpleAdapter(this,list,R.layout.list_item_row,
-                new String[]{"Name","feedback"},new int[]{R.id.tv_item_name,R.id.tv_brand});
-
+        adapter = new SimpleAdapter(this, list, R.layout.list_item_row,
+                new String[]{"Name", "feedback"}, new int[]{R.id.tv_item_name, R.id.tv_brand});
 
         listView.setAdapter(adapter);
         loading.dismiss();

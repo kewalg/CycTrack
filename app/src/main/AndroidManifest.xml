@@ -23,9 +23,7 @@
         <activity android:name=".SafetyActivity">
 
         </activity>
-        <activity android:name=".MapBoxActivity" >
-
-        </activity>
+        <activity android:name=".MapBoxActivity"></activity>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +33,9 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".SpeedActivity" />
+        <activity android:name=".SpeedActivity">
+
+        </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".WeatherActivity" />

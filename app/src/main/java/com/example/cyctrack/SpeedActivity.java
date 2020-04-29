@@ -105,7 +105,7 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
         if (this.useMetricUnits()) {
             tv_speed.setText(strCurrentSpeed + " km/h");
 
-            if (Integer.parseInt(strCurrentSpeed) > 20) {
+            /*if (Long.parseLong(strCurrentSpeed) > 20) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SpeedActivity.this);
                 builder.setCancelable(true);
                 builder.setTitle("CAUTION!! Speed Limit Exceed Alert!!");
@@ -123,11 +123,11 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
                     }
                 });
                 builder.show();
-            }
+            }*/
 
         } else {
             tv_speed.setText(strCurrentSpeed + "miles/h");
-            if (Integer.parseInt(strCurrentSpeed) > 12) {
+          /*  if (Long.parseLong(strCurrentSpeed) > 12) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SpeedActivity.this);
                 builder.setCancelable(true);
                 builder.setTitle("CAUTION!! Speed Limit Exceed Alert!!");
@@ -145,13 +145,12 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
                     }
                 });
                 builder.show();
-            }
+            }*/
         }
     }
 
     private boolean useMetricUnits() {
         return sw_metric.isChecked();
-
     }
 
 
