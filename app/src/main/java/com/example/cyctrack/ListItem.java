@@ -3,6 +3,7 @@ package com.example.cyctrack;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -36,6 +37,7 @@ public class ListItem extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.list_item);
         listView = findViewById(R.id.lv_items);
         getItems();

@@ -12,6 +12,7 @@ import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -73,6 +74,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_map_box);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mapView = findViewById(R.id.mapView);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 

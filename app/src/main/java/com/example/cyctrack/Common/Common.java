@@ -28,7 +28,7 @@ public class Common {
     }
 
     public static String getDateNow(){
-        DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd MMMM yy HH:mm");
         Date date = new Date();
         return dateFormat.format(date);
     }

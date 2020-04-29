@@ -11,8 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="@drawable/custom_button"
+        android:padding="10dp"
         android:text="Want to Review the app?"
-        tools:ignore="MissingConstraints" />
+        android:textColor="#fff" />
 
     <Button
         android:id="@+id/btn_list_items"
@@ -21,8 +23,10 @@
         android:layout_below="@id/btn_add_item"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_button"
+        android:padding="10dp"
         android:text="View Reviews"
-        app:layout_constraintLeft_toRightOf="@id/btn_add_item"
-        tools:ignore="MissingConstraints" />
+        android:textColor="#fff" />
 
 </RelativeLayout>

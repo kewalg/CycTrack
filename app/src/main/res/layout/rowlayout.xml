@@ -5,6 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:checkMarkTint="#fff"
     android:gravity="center_vertical"
     android:padding="5sp"
+    android:textColor="#fff"
     android:textSize="20sp" />

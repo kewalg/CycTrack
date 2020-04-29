@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_weather);
 
 
@@ -181,6 +183,14 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            txtCity.setVisibility(1);
+            txtLastUpdate.setVisibility(1);
+            txtDescription.setVisibility(1);
+            txtHumidity.setVisibility(1);
+            txtTime.setVisibility(1);
+            txtCelsius.setVisibility(1);
+
+
             if (s.contains("Error: Not found city")) {
                 pd.dismiss();
                 return;
@@ -191,8 +201,9 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
             openWeatherMap = gson.fromJson(s, mType);
             pd.dismiss();
 
+
             txtCity.setText(String.format("%s,%s", openWeatherMap.getName(), openWeatherMap.getSys().getCountry()));
-            txtLastUpdate.setText(String.format("Last Updated: %s", Common.getDateNow()));
+            txtLastUpdate.setText(String.format("%s", Common.getDateNow()));
             txtDescription.setText(String.format("%s", openWeatherMap.getWeather().get(0).getDescription()));
             txtHumidity.setText(String.format("%d%%", openWeatherMap.getMain().getHumidity()));
             txtTime.setText(String.format("%s/%s", Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunrise()), Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunset())));

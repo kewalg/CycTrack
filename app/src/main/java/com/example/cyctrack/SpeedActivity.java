@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,18 +31,18 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
 
     SwitchCompat sw_metric;
     TextView tv_speed;
-    private TextView alertTextView;
 
 
     @RequiresApi(api = VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_speed);
 
         sw_metric = findViewById(R.id.sw_metric);
         tv_speed = findViewById(R.id.tv_speed);
-        alertTextView = (TextView) findViewById(R.id.AlertTextView);
+        //alertTextView = (TextView) findViewById(R.id.AlertTextView);
 
         if (Build.VERSION.SDK_INT >= VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
@@ -94,6 +95,7 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
 
     private void updateSpeed(CLocation location) {
         float mCurrentSpeed = 0;
+        long val = 0;
         if (location != null) {
             location.setUseMetricUnits(this.useMetricUnits());
             mCurrentSpeed = location.getSpeed();
@@ -104,48 +106,41 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
         strCurrentSpeed = strCurrentSpeed.replace(" ", "0");
         if (this.useMetricUnits()) {
             tv_speed.setText(strCurrentSpeed + " km/h");
-
-            /*if (Long.parseLong(strCurrentSpeed) > 20) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SpeedActivity.this);
-                builder.setCancelable(true);
-                builder.setTitle("CAUTION!! Speed Limit Exceed Alert!!");
-                builder.setMessage("You have exceeded 20 km/h speed. Please slow down!!");
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        alertTextView.setVisibility(View.VISIBLE);
-                    }
-                });
-                builder.show();
-            }*/
-
+            try {
+                val = Long.parseLong(strCurrentSpeed);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+            }
+            if (val > 20) {
+                AlertDialog.Builder a_builder = new AlertDialog.Builder(SpeedActivity.this);
+                a_builder.setMessage("Caution! Please Slow Down.")
+                        .setCancelable(false)
+                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = a_builder.create();
+                alert.setTitle("Alert !!!");
+                alert.show();
+            }
         } else {
             tv_speed.setText(strCurrentSpeed + "miles/h");
-          /*  if (Long.parseLong(strCurrentSpeed) > 12) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SpeedActivity.this);
-                builder.setCancelable(true);
-                builder.setTitle("CAUTION!! Speed Limit Exceed Alert!!");
-                builder.setMessage("You have exceeded 12 m/h speed. Please slow down!!");
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        alertTextView.setVisibility(View.VISIBLE);
-                    }
-                });
-                builder.show();
-            }*/
+            if (val > 12) {
+                AlertDialog.Builder a_builder = new AlertDialog.Builder(SpeedActivity.this);
+                a_builder.setMessage("Caution! Please Slow Down.")
+                        .setCancelable(false)
+                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = a_builder.create();
+                alert.setTitle("Alert !!!");
+                alert.show();
+            }
         }
     }
 
