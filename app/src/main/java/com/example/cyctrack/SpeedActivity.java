@@ -109,7 +109,6 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
             try {
                 val = Long.parseLong(strCurrentSpeed);
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
             }
             if (val > 20) {
                 AlertDialog.Builder a_builder = new AlertDialog.Builder(SpeedActivity.this);

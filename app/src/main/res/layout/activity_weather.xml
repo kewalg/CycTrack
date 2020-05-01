@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtHumidity"
         android:layout_marginLeft="20dp"
-        android:text="Local Time: "
+        android:text="Sunrise/Sunset Time: "
         android:textColor="#fff"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -164,7 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title_time"
         android:layout_marginLeft="20dp"
-        android:text="Tempreature: "
+        android:text="Temperature: "
         android:textColor="#fff"
         android:textSize="20sp"
         android:textStyle="bold" />

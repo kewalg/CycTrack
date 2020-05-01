@@ -61,7 +61,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                     public void onResponse(String response) {
                         loading.dismiss();
                         Toast.makeText(AddItem.this, response, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
                         startActivity(intent);
                     }
                 },
