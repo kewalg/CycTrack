@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class Speed1Activity extends AppCompatActivity implements LocationListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speed1);
+        final MediaPlayer speedalert = MediaPlayer.create(Speed1Activity.this,R.raw.speedalert);
 
         //added because new access fine location policies, imported class..
         //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -47,6 +49,7 @@ public class Speed1Activity extends AppCompatActivity implements LocationListene
 
     @Override
     public void onLocationChanged(Location location) {
+        final MediaPlayer speedAlertPlayer = MediaPlayer.create(Speed1Activity.this,R.raw.speedalert);
 
         TextView txt = (TextView) this.findViewById(R.id.textView1);
 
@@ -57,18 +60,8 @@ public class Speed1Activity extends AppCompatActivity implements LocationListene
             float nCurrentSpeed = location.getSpeed() * 3.6f;
             txt.setText(String.format("%.2f", nCurrentSpeed)+ " km/h" );
             if (nCurrentSpeed > 30.0) {
-                AlertDialog.Builder a_builder = new AlertDialog.Builder(Speed1Activity.this);
-                a_builder.setMessage("Caution! Please Slow Down.")
-                        .setCancelable(false)
-                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = a_builder.create();
-                alert.setTitle("Alert !!!");
-                alert.show();
+                speedAlertPlayer.start();
+                
             }
         }
 
