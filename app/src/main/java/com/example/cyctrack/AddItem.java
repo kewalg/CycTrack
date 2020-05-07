@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,6 +33,10 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
     EditText editName, editFeedback;
     Button btnSubmit;
+    TextView tvRating;
+    private RatingBar ratingBar;
+    private float ratedValue;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +46,22 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         editName = findViewById(R.id.editName);
         editFeedback = findViewById(R.id.editFeedback);
         btnSubmit = findViewById(R.id.btnSubmit);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        tvRating = findViewById(R.id.tvRating);
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+            @Override
+
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+
+                                        boolean fromUser) {
+
+                ratedValue = ratingBar.getRating();
+            }
+            });
         btnSubmit.setOnClickListener(this);
+        tvRating.setText("Your rating is: " +ratingBar.getRating());
 
     }
 
@@ -53,6 +74,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         //encrypt these editnames
         final String name = editName.getText().toString().trim();
         final String feedback = editFeedback.getText().toString().trim();
+        final String rating = Float.toString(ratedValue);
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxzZJrl-RHe_61AfbWPH22pOSu8X_QXQrHFWQjbfiIWpJLDxP4/exec",
@@ -79,6 +101,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 parmas.put("action", "addItem");
                 parmas.put("Name", name);
                 parmas.put("feedback", feedback);
+                parmas.put("rating",rating);
 
                 return parmas;
             }
