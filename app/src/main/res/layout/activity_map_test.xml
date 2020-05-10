@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapTestActivity">
+
+    <com.mapbox.mapboxsdk.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/startbutton"
+        android:layout_below="@id/btn_locateme"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        mapbox:mapbox_cameraZoom="15" />
+
+    <EditText
+        android:id="@+id/edt_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/btn_submit"
+        android:hint="Enter address"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Submit" />
+
+    <Button
+        android:id="@+id/btn_locateme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_submit"
+        android:layout_alignParentRight="true"
+        android:text="." />
+
+    <Button
+        android:id="@+id/startbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:enabled="false"
+        android:text="Start Navigation" />
+
+
+</RelativeLayout>

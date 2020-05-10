@@ -13,7 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-feature android:name="android.hardware.location.gps"/>
+
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:allowBackup="true"
@@ -23,28 +24,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Speed1Activity">
+        <activity android:name=".MapTestActivity"><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <action android:name="com.package.name.MyActivity" />
 
-        </activity>
-        <activity android:name=".SafetyActivity"></activity>
-        <activity android:name=".MapBoxActivity"></activity>
-        <activity android:name=".SplashScreen">
-
-        </activity>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".Speed1Activity"></activity>
+        <activity android:name=".SafetyActivity" />
+        <activity android:name=".MapBoxActivity" />
+        <activity android:name=".SplashScreen"></activity>
         <activity android:name=".SpeedActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MapsActivity" />
-        <activity android:name=".WeatherActivity">
-
-
-        </activity>
+        <activity android:name=".WeatherActivity"></activity>
         <activity android:name=".ReviewActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.package.name.MyActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".AddItem" />
         <activity android:name=".ListItem" />
