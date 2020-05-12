@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3a424d"
-    android:orientation="vertical"
-    tools:context=".SafetyActivity">
+    android:background="#3a424d">
 
     <TextView
-        android:id="@+id/tvHeading"
+        android:id="@+id/tv_heading1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -19,31 +15,73 @@
         android:textSize="24sp" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView3"
         android:layout_width="500px"
         android:layout_height="500px"
-        android:layout_below="@id/tvHeading"
+        android:layout_below="@id/tv_heading1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:src="@drawable/cycleimage" />
 
-    <ListView
-        android:id="@+id/checkable_list"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@id/imageView2"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/btnLetsGo"
+    <CheckedTextView
+        android:id="@+id/ctv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/checkable_list"
+        android:layout_below="@id/imageView3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/custom_button"
-        android:enabled="false"
-        android:text="Lets Go!"
+        android:layout_marginTop="25dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center"
+        android:text="Helmet"
         android:textColor="#fff" />
+
+
+    <CheckedTextView
+        android:id="@+id/ctv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ctv1"
+        android:layout_centerHorizontal="true"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center"
+        android:text="Lights"
+        android:textColor="#fff" />
+
+
+    <CheckedTextView
+        android:id="@+id/ctv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ctv2"
+        android:layout_centerHorizontal="true"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center"
+        android:text="Knee-Pads"
+        android:textColor="#fff" />
+
+
+    <CheckedTextView
+        android:id="@+id/ctv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ctv3"
+        android:layout_centerHorizontal="true"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center"
+        android:text="Arm Guards"
+        android:textColor="#fff" />
+
+
+    <CheckedTextView
+        android:id="@+id/ctv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ctv4"
+        android:layout_centerHorizontal="true"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center"
+        android:text="Visibility Jacket"
+        android:textColor="#fff" />
+
 
 </RelativeLayout>

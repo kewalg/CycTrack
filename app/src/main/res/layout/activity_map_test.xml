@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/startbutton"
-        android:layout_below="@id/btn_locateme"
+        android:layout_below="@id/edt_address"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         mapbox:mapbox_cameraZoom="15" />
@@ -35,13 +35,6 @@
         android:layout_alignParentRight="true"
         android:text="Submit" />
 
-    <Button
-        android:id="@+id/btn_locateme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_submit"
-        android:layout_alignParentRight="true"
-        android:text="." />
 
     <Button
         android:id="@+id/startbutton"
@@ -49,9 +42,38 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="70dp"
         android:enabled="false"
         android:text="Start Navigation" />
+
+    <Button
+        android:id="@+id/homeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Home" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/tglNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/homeBtn"
+        android:thumb="@drawable/thumb1"
+        app:track="@drawable/track" />
+
+    <TextView
+        android:id="@+id/tv_speed_latest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/tglNew"
+        android:text="0.0 km/h"
+        android:textSize="25sp" />
 
 
 </RelativeLayout>

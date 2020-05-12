@@ -35,13 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        ImageView img_maps, img_weather, img_reviews, img_speedo;
         Button btn_dnd, btn_map, btn_weather, btn_review, btn_speedometer;
-
-        img_maps = findViewById(R.id.img_maps);
-        img_weather = findViewById(R.id.img_weather);
-        img_reviews = findViewById(R.id.img_reviews);
-        img_speedo = findViewById(R.id.img_speedo);
         btn_dnd = findViewById(R.id.btn_dnd);
 
         btn_map = findViewById(R.id.btn_maps);

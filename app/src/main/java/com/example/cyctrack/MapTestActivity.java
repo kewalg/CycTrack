@@ -1,7 +1,16 @@
 package com.example.cyctrack;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.content.Context;
@@ -12,14 +21,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Lifecycle;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineListener;
@@ -57,7 +72,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener, View.OnClickListener {
+public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener, View.OnClickListener, LocationListener {
 
     private PermissionsManager permissionsManager;
     private MapView mapView;
@@ -66,7 +81,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
     private Location originLocation;
-
+    private NotificationManager mNotificationManager;
     private Location lastlocation;
     private Point originPosition;
     private Point destinationPosition;
@@ -74,7 +89,9 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     private static final String TAG = "MainActivity";
     private String TEST = "NAVI_TEST";
     private EditText edt_search;
-    private Button btn_submit, btn_locateme;
+    private Button btn_submit;
+    private TextView tv_speedtest;
+    private SwitchCompat tglbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,16 +103,75 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         mapView = findViewById(R.id.mapView);
         startButton = findViewById(R.id.startbutton);
         edt_search = findViewById(R.id.edt_address);
+        tglbtn = findViewById(R.id.tglNew);
+        tv_speedtest = findViewById(R.id.tv_speed_latest);
         btn_submit = findViewById(R.id.btn_submit);
-        btn_locateme = findViewById(R.id.btn_locateme);
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
         startButton.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
-        btn_locateme.setOnClickListener(this);
+
+
+        tglbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
+                    Toast.makeText(MapTestActivity.this, "DND Enabled!", Toast.LENGTH_SHORT).show();
+                } else {
+                    changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_ALL);
+                    Toast.makeText(MapTestActivity.this, "DND Disabled!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        final MediaPlayer speedalert = MediaPlayer.create(MapTestActivity.this, R.raw.speedalert);
+        //added because new access fine location policies, imported class..
+        //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        //check permission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
+        } else {
+            //start the program if permission is granted
+            doStuff();
+        }
     }
 
+    private void doStuff() {
+        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (lm != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            //commented, this is from the old version
+            // this.onLocationChanged(null);
+        }
+        Toast.makeText(this, "Waiting for GPS connection!", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void changeInterruptionFiler(int interruptionFilter) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // If api level minimum 23
+            if (mNotificationManager.isNotificationPolicyAccessGranted()) {
+                mNotificationManager.setInterruptionFilter(interruptionFilter);
+            } else {
+                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                startActivity(intent);
+            }
+        }
+    }
 
     private void show() {
         String destination = edt_search.getText().toString();
@@ -108,19 +184,16 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
             destinationPosition = Point.fromLngLat(longitude, latitude);
             originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude());
-
             getRoute(originPosition, destinationPosition);
             Log.d("Test", "<==============>origin: " + originPosition + "destination<==============>: " + destinationPosition);
             startButton.setEnabled(true);
-
-            CameraPosition position = new CameraPosition.Builder()
+            /*CameraPosition position = new CameraPosition.Builder()
                     .target(new LatLng(latitude, longitude))
                     .zoom(15)
                     .build();
 
             map.animateCamera(CameraUpdateFactory
-                    .newCameraPosition(position), 2000);
-
+                    .newCameraPosition(position), 2000);*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -174,7 +247,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         locationLayerPlugin = new LocationLayerPlugin(mapView, map, locationEngine);
         locationLayerPlugin.setLocationLayerEnabled(true);
         locationLayerPlugin.setCameraMode(CameraMode.TRACKING);
-        locationLayerPlugin.setRenderMode(RenderMode.COMPASS);
+        locationLayerPlugin.setRenderMode(RenderMode.NORMAL);
     }
 
 
@@ -226,6 +299,29 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             Log.d(TAG, "on location changed");
             setCameraPosition(location);
         }
+
+        final MediaPlayer speedAlertPlayer = MediaPlayer.create(MapTestActivity.this, R.raw.speedalert);
+        if (location == null) {
+            tv_speedtest.setText("-.- km/h");
+        } else {
+            float nCurrentSpeed = location.getSpeed() * 3.6f;
+            tv_speedtest.setText(String.format("%.2f", nCurrentSpeed) + " km/h");
+            if (nCurrentSpeed == 0.0) {
+                speedAlertPlayer.start();
+            }
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
     }
 
     @Override
@@ -249,9 +345,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 NavigationLauncher.startNavigation(MapTestActivity.this, options);
                 break;
             }
-            case R.id.btn_locateme: {
-                Toast.makeText(this, "Testasdasasds", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
@@ -270,6 +363,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        doStuff();
     }
 
     @Override
@@ -277,55 +371,48 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onStart() {
         super.onStart();
         mapView.onStart();
-        if (locationEngine != null) {
+       /* if (locationEngine != null) {
             locationEngine.requestLocationUpdates();
             locationEngine.addLocationEngineListener(this);
-        }
-        Log.d(TAG, "onstart");
+        }*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mapView.onResume();
-        Log.d(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mapView.onPause();
-        Log.d(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mapView.onStop();
-        if (locationEngine != null) {
+       /* if (locationEngine != null) {
             locationEngine.removeLocationEngineListener(this);
             locationEngine.removeLocationUpdates();
-        }
-        Log.d(TAG, "onStop");
+        }*/
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
-        Log.d(TAG, "onSavedInstance");
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
-        Log.d(TAG, "OnLowmemory");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "OnDestroy");
     }
 }

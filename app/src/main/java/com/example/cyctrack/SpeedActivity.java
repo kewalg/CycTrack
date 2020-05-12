@@ -1,152 +1,53 @@
 package com.example.cyctrack;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraConstrainedHighSpeedCaptureSession;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Formatter;
-import java.util.Locale;
-
 public class SpeedActivity extends AppCompatActivity implements LocationListener {
-
-    SwitchCompat sw_metric;
-    TextView tv_speed;
-
-
-    @RequiresApi(api = VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_speed);
-
-        sw_metric = findViewById(R.id.sw_metric);
-        tv_speed = findViewById(R.id.tv_speed);
-        //alertTextView = (TextView) findViewById(R.id.AlertTextView);
-
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
+        final MediaPlayer speedalert = MediaPlayer.create(SpeedActivity.this,R.raw.speedalert);
+        //added because new access fine location policies, imported class..
+        //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        //check permission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
         } else {
+            //start the program if permission is granted
             doStuff();
         }
-        this.updateSpeed(null);
-        sw_metric.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SpeedActivity.this.updateSpeed(null);
-            }
-        });
     }
 
     @Override
     public void onLocationChanged(Location location) {
-
-        if (location != null) {
-            CLocation myLocation = new CLocation(location, this.useMetricUnits());
-            this.updateSpeed(myLocation);
-        }
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    private void doStuff() {
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager != null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        }
-        Toast.makeText(this, "waiting for gps connection", Toast.LENGTH_SHORT).show();
-    }
-
-    private void updateSpeed(CLocation location) {
-        float mCurrentSpeed = 0;
-        long val = 0;
-        if (location != null) {
-            location.setUseMetricUnits(this.useMetricUnits());
-            mCurrentSpeed = location.getSpeed();
-        }
-        Formatter fmt = new Formatter(new StringBuilder());
-        fmt.format(Locale.US, "%5.1f", mCurrentSpeed);
-        String strCurrentSpeed = fmt.toString();
-        strCurrentSpeed = strCurrentSpeed.replace(" ", "0");
-        if (this.useMetricUnits()) {
-            tv_speed.setText(strCurrentSpeed + " km/h");
-            try {
-                val = Long.parseLong(strCurrentSpeed);
-            } catch (NumberFormatException e) {
-            }
-            if (val > 20) {
-                AlertDialog.Builder a_builder = new AlertDialog.Builder(SpeedActivity.this);
-                a_builder.setMessage("Caution! Please Slow Down.")
-                        .setCancelable(false)
-                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = a_builder.create();
-                alert.setTitle("Alert !!!");
-                alert.show();
-            }
+        final MediaPlayer speedAlertPlayer = MediaPlayer.create(SpeedActivity.this,R.raw.speedalert);
+        TextView txt = (TextView) this.findViewById(R.id.textView1);
+        if (location==null){
+            txt.setText("-.- km/h");
         } else {
-            tv_speed.setText(strCurrentSpeed + "miles/h");
-            if (val > 12) {
-                AlertDialog.Builder a_builder = new AlertDialog.Builder(SpeedActivity.this);
-                a_builder.setMessage("Caution! Please Slow Down.")
-                        .setCancelable(false)
-                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = a_builder.create();
-                alert.setTitle("Alert !!!");
-                alert.show();
+            float nCurrentSpeed = location.getSpeed() * 3.6f;
+            txt.setText(String.format("%.2f", nCurrentSpeed)+ " km/h" );
+            if (nCurrentSpeed > 30.0) {
+                speedAlertPlayer.start();
             }
         }
     }
-
-    private boolean useMetricUnits() {
-        return sw_metric.isChecked();
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -157,5 +58,28 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
                 finish();
             }
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void doStuff(){
+        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (lm != null){
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
+            //commented, this is from the old version
+            // this.onLocationChanged(null);
+        }
+        Toast.makeText(this,"Waiting for GPS connection!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
     }
 }

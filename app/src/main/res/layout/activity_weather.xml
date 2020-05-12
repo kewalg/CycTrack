@@ -9,36 +9,11 @@
     tools:context=".WeatherActivity">
 
     <TextView
-        android:id="@+id/titletext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="Weather At Your Location:"
-        android:textColor="#fff"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/title_city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titletext"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="200dp"
-        android:text="City: "
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/txtCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titletext"
-        android:layout_marginTop="200dp"
-        android:layout_toRightOf="@id/title_city"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="city"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -46,41 +21,26 @@
         android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/title_lastupdatedon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_city"
-        android:layout_marginLeft="20dp"
-        android:text="Last Updated: "
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txtLastUpdate"
+        android:id="@+id/txtCelsius"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtCity"
-        android:layout_toRightOf="@id/title_lastupdatedon"
-        android:text="lastupdatedon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="celcius"
         android:textColor="#fff"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/txtLastUpdate"
-        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/txtDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
-        android:layout_toRightOf="@id/title_desc"
+        android:layout_below="@id/txtCelsius"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="description"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -88,98 +48,67 @@
         android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/title_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
-        android:layout_marginLeft="20dp"
-        android:text="Forecast: "
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/txtHumidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtDescription"
-        android:layout_toRightOf="@id/title_humidity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="humidity"
         android:textColor="#fff"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/title_humidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_desc"
-        android:layout_marginLeft="20dp"
-        android:text="Humidity: "
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
-
-    <TextView
-        android:id="@+id/txtTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_below="@id/txtHumidity"
-        android:layout_toRightOf="@id/title_time"
-        android:text="time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/tv_settext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:text="test"
         android:textColor="#fff"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/title_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtHumidity"
-        android:layout_marginLeft="20dp"
-        android:text="Sunrise/Sunset Time: "
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/txtCelsius"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtTime"
-        android:layout_toRightOf="@id/title_celcius"
-        android:text="celcius"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/title_celcius"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_time"
-        android:layout_marginLeft="20dp"
-        android:text="Temperature: "
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
 
     <Button
-        android:id="@+id/btn_letsride"
+        android:id="@+id/btn_maps1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtCelsius"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/custom_button"
-        android:text="Lets Ride"
-        android:textColor="#fff" />
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="70dp"
+        android:layout_toStartOf="@id/tv_settext"
+        android:text="test" />
 
+    <Button
+        android:id="@+id/btn_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="70dp"
+        android:layout_toRightOf="@id/btn_maps1"
+        android:text="test" />
+
+    <TextView
+        android:id="@+id/tv_aboutus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="About Us" />
 
 </RelativeLayout>
