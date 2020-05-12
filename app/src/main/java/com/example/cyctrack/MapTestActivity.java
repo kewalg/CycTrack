@@ -45,6 +45,10 @@ import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.api.directions.v5.models.DirectionsRoute;
+import com.mapbox.api.geocoding.v5.GeocodingCriteria;
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Marker;
@@ -61,6 +65,7 @@ import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
+import com.mapbox.services.android.navigation.ui.v5.listeners.NavigationListener;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 
@@ -72,7 +77,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener, View.OnClickListener, LocationListener {
+public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener, View.OnClickListener, LocationListener, NavigationListener {
 
     private PermissionsManager permissionsManager;
     private MapView mapView;
@@ -128,8 +133,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             }
         });
 
-
-        final MediaPlayer speedalert = MediaPlayer.create(MapTestActivity.this, R.raw.speedalert);
         //added because new access fine location policies, imported class..
         //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         //check permission
@@ -180,23 +183,53 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             List<Address> mResultLocation = mGeocoder.getFromLocationName(destination, 1);
             double latitude = mResultLocation.get(0).getLatitude();
             double longitude = mResultLocation.get(0).getLongitude();
-            Log.d("Test", "latitude: " + latitude + "longitude: " + longitude);
+
+            Log.d("Address", "Destination Address: " + destination);
+
 
             destinationPosition = Point.fromLngLat(longitude, latitude);
             originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude());
             getRoute(originPosition, destinationPosition);
-            Log.d("Test", "<==============>origin: " + originPosition + "destination<==============>: " + destinationPosition);
+
+
             startButton.setEnabled(true);
-            /*CameraPosition position = new CameraPosition.Builder()
+            CameraPosition position = new CameraPosition.Builder()
                     .target(new LatLng(latitude, longitude))
                     .zoom(15)
                     .build();
-
             map.animateCamera(CameraUpdateFactory
-                    .newCameraPosition(position), 2000);*/
+                    .newCameraPosition(position), 2000);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        MapboxGeocoding reverseGeocode = MapboxGeocoding.builder()
+                .accessToken(Mapbox.getAccessToken())
+                .query(originPosition)
+                .geocodingTypes(GeocodingCriteria.TYPE_ADDRESS)
+                .build();
+
+        reverseGeocode.enqueueCall(new Callback<GeocodingResponse>() {
+            @Override
+            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+                List<CarmenFeature> results = response.body().features();
+                if (results.size() > 0) {
+                    String source_address_complete = response.body().features().get(0).placeName();
+                    String source_address_short = response.body().features().get(0).text();
+                    Point firstResultPoint = results.get(0).center();
+                    //Log.d(TAG, "onResponse: " + firstResultPoint.coordinates());
+                    Log.d(TAG, "onResponse: " + source_address_short);
+                    Log.d(TAG, "onResponse: " + source_address_complete);
+                } else {
+                    Log.d(TAG, "onResponse: No result found");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeocodingResponse> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -241,7 +274,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         Log.d(TAG, "initialize location Engine");
     }
 
-
     @SuppressWarnings("MissingPermission")
     private void initializeLocationLayer() {
         locationLayerPlugin = new LocationLayerPlugin(mapView, map, locationEngine);
@@ -253,7 +285,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
     private void setCameraPosition(Location location) {
         Log.d(TAG, "settingcamera");
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 1000.0));
+        //  map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 1000.0));
     }
 
 
@@ -297,7 +329,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         if (location != null) {
             originLocation = location;
             Log.d(TAG, "on location changed");
-            setCameraPosition(location);
+            //  setCameraPosition(location);
         }
 
         final MediaPlayer speedAlertPlayer = MediaPlayer.create(MapTestActivity.this, R.raw.speedalert);
@@ -306,7 +338,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         } else {
             float nCurrentSpeed = location.getSpeed() * 3.6f;
             tv_speedtest.setText(String.format("%.2f", nCurrentSpeed) + " km/h");
-            if (nCurrentSpeed == 0.0) {
+            if (nCurrentSpeed > 30.0) {
                 speedAlertPlayer.start();
             }
         }
@@ -340,7 +372,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                         .origin(originPosition)
                         .destination(destinationPosition)
                         .directionsProfile(DirectionsCriteria.PROFILE_CYCLING)
-                        .shouldSimulateRoute(false)
+                        .shouldSimulateRoute(true)
                         .build();
                 NavigationLauncher.startNavigation(MapTestActivity.this, options);
                 break;
@@ -365,6 +397,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
         doStuff();
     }
+
 
     @Override
     @SuppressWarnings({"MissingPermission"})
@@ -414,5 +447,19 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onCancelNavigation() {
+    }
+
+    @Override
+    public void onNavigationFinished() {
+        Intent i = new Intent(MapTestActivity.this, MapTestActivity.class);
+        startActivity(i);
+    }
+
+    @Override
+    public void onNavigationRunning() {
     }
 }

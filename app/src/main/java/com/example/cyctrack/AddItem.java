@@ -53,10 +53,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
             @Override
 
-            public void onRatingChanged(RatingBar ratingBar, float rating,
-
-                                        boolean fromUser) {
-
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 ratedValue = ratingBar.getRating();
             }
             });
