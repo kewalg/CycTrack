@@ -9,16 +9,25 @@
     tools:context=".WeatherActivity">
 
     <TextView
+        android:id="@+id/tv_title_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Weather At Your Current Location"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+    <TextView
         android:id="@+id/txtCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title_weather"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="city"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtCelsius"
@@ -90,17 +99,17 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="70dp"
         android:layout_toStartOf="@id/tv_settext"
-        android:text="test" />
+        android:text="Maps" />
 
     <Button
         android:id="@+id/btn_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginBottom="71dp"
         android:layout_toRightOf="@id/btn_maps1"
-        android:text="test" />
+        android:text="View Feedback" />
 
     <TextView
         android:id="@+id/tv_aboutus"
@@ -109,6 +118,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:text="About Us" />
+        android:text="About Us"
+        android:textColor="#fff" />
 
 </RelativeLayout>

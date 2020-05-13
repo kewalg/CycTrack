@@ -80,14 +80,14 @@ public class ListItem extends AppCompatActivity {
 
             for (int i = 0; i < jarray.length(); i++) {
                 JSONObject jo = jarray.getJSONObject(i);
-                String name = jo.getString("Name");
-                String feedback = jo.getString("feedback");
+                String route = jo.getString("route");
                 String rating = jo.getString("rating");
+                String feedback = jo.getString("feedback");
 
                 HashMap<String, String> item = new HashMap<>();
-                item.put("Name", name);
+                item.put("route", route);
+                item.put("rating", rating);
                 item.put("feedback", feedback);
-                item.put("rating",rating);
                 list.add(item);
             }
         } catch (JSONException e) {
@@ -95,7 +95,7 @@ public class ListItem extends AppCompatActivity {
         }
 
         adapter = new SimpleAdapter(this, list, R.layout.list_item_row,
-                new String[]{"Name", "feedback","rating"}, new int[]{R.id.tv_item_name, R.id.tv_brand,R.id.tvRating});
+                new String[]{"route", "rating", "feedback"}, new int[]{R.id.tv_route_final, R.id.tv_rating_final, R.id.tv_feedback_final});
 
         listView.setAdapter(adapter);
         loading.dismiss();

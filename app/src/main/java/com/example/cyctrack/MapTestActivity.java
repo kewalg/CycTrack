@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,8 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Lifecycle;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.provider.Settings;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -65,12 +68,14 @@ import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
+import com.mapbox.services.android.navigation.ui.v5.NavigationView;
 import com.mapbox.services.android.navigation.ui.v5.listeners.NavigationListener;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,7 +86,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
     private PermissionsManager permissionsManager;
     private MapView mapView;
-    private Button startButton;
+    private Button startButton, testButton;
     private MapboxMap map;
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
@@ -91,6 +96,8 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     private Point originPosition;
     private Point destinationPosition;
     private NavigationMapRoute navigationMapRoute;
+    private NavigationListener navigationListener;
+    private SharedPreferences sharedPreferences;
     private static final String TAG = "MainActivity";
     private String TEST = "NAVI_TEST";
     private EditText edt_search;
@@ -111,12 +118,14 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         tglbtn = findViewById(R.id.tglNew);
         tv_speedtest = findViewById(R.id.tv_speed_latest);
         btn_submit = findViewById(R.id.btn_submit);
+        testButton = findViewById(R.id.testButton);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
         startButton.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
+        testButton.setOnClickListener(this);
 
 
         tglbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -178,6 +187,16 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
     private void show() {
         String destination = edt_search.getText().toString();
+
+        /*Intent myIntent = new Intent(MapTestActivity.this, AddItem.class);
+        myIntent.putExtra("destionation_key", destination);
+        startActivity(myIntent);*/
+        sharedPreferences = getSharedPreferences("Destination_key", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Destination_key_value", destination);
+        editor.apply();
+
+
         Geocoder mGeocoder = new Geocoder(getApplicationContext());
         try {
             List<Address> mResultLocation = mGeocoder.getFromLocationName(destination, 1);
@@ -216,6 +235,14 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 if (results.size() > 0) {
                     String source_address_complete = response.body().features().get(0).placeName();
                     String source_address_short = response.body().features().get(0).text();
+
+
+                    sharedPreferences = getSharedPreferences("Source_key", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("Source_key_value", source_address_short);
+                    editor.apply();
+
+
                     Point firstResultPoint = results.get(0).center();
                     //Log.d(TAG, "onResponse: " + firstResultPoint.coordinates());
                     Log.d(TAG, "onResponse: " + source_address_short);
@@ -377,6 +404,11 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 NavigationLauncher.startNavigation(MapTestActivity.this, options);
                 break;
             }
+
+            case R.id.testButton: {
+                Intent i = new Intent(MapTestActivity.this, AddItem.class);
+                startActivity(i);
+            }
         }
     }
 
@@ -449,15 +481,28 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         super.onDestroy();
     }
 
+    /*@Override
+    public void onNavigationFinished() {
+        Intent i = new Intent(MapTestActivity.this, ReviewActivity.class);
+        startActivity(i);
+    }*/
+
     @Override
     public void onCancelNavigation() {
+        Log.d("Text", "onCancelNavigation");
     }
 
     @Override
     public void onNavigationFinished() {
-        Intent i = new Intent(MapTestActivity.this, MapTestActivity.class);
-        startActivity(i);
+        // End the navigation session
+        if (navigationListener != null) {
+            navigationListener.onNavigationFinished();
+            Log.d("oasihdlasdhasldhashdjlasd", "finishedfinishedfinishedfinishedfinishedfinishedfinishedfinished");
+        }
+        Intent intent = new Intent(this, ReviewActivity.class);
+        startActivity(intent);
     }
+
 
     @Override
     public void onNavigationRunning() {

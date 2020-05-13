@@ -1,8 +1,13 @@
 package com.example.cyctrack;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -33,7 +39,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
     EditText editName, editFeedback;
     Button btnSubmit;
-    TextView tvRating;
+    TextView tvRating, tv_source_Route, tv_dest_Route;
     private RatingBar ratingBar;
     private float ratedValue;
 
@@ -42,12 +48,15 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         setContentView(R.layout.add_item);
         editName = findViewById(R.id.editName);
         editFeedback = findViewById(R.id.editFeedback);
         btnSubmit = findViewById(R.id.btnSubmit);
+        tv_source_Route = findViewById(R.id.tv_source_route);
+        tv_dest_Route = findViewById(R.id.tv_dest_route);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        tvRating = findViewById(R.id.tvRating);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
@@ -56,13 +65,22 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 ratedValue = ratingBar.getRating();
             }
-            });
+        });
         btnSubmit.setOnClickListener(this);
-        tvRating.setText("Your rating is: " +ratingBar.getRating());
+
+        // tvRoute.setText(getIntent().getStringExtra("destionation_key"));
+        SharedPreferences source_result = getSharedPreferences("Source_key", Context.MODE_PRIVATE);
+        String source_value = source_result.getString("Source_key_value", "Data Not Found");
+        tv_source_Route.setText(source_value);
+
+        SharedPreferences destination_result = getSharedPreferences("Destination_key", Context.MODE_PRIVATE);
+        String destination_value = destination_result.getString("Destination_key_value", "Data Not Found");
+        tv_dest_Route.setText(destination_value);
 
     }
 
-    //This is the part where data is transafeered from Your Android phone to Sheet by using HTTP Rest API calls
+
+    //This is the part where data is transferred from Your Android phone to Sheet by using HTTP Rest API calls
 
 
     private void addItemToSheet() {
@@ -72,7 +90,9 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         final String name = editName.getText().toString().trim();
         final String feedback = editFeedback.getText().toString().trim();
         final String rating = Float.toString(ratedValue);
-
+        final String source = tv_source_Route.getText().toString().trim();
+        final String dest = tv_dest_Route.getText().toString().trim();
+        final String route = source + " - " + dest;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxzZJrl-RHe_61AfbWPH22pOSu8X_QXQrHFWQjbfiIWpJLDxP4/exec",
                 new Response.Listener<String>() {
@@ -97,9 +117,9 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 //here we pass params
                 parmas.put("action", "addItem");
                 parmas.put("Name", name);
+                parmas.put("route", route);
+                parmas.put("rating", rating);
                 parmas.put("feedback", feedback);
-                parmas.put("rating",rating);
-
                 return parmas;
             }
         };
@@ -113,11 +133,9 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
         if (v == btnSubmit) {
             addItemToSheet();
             //Define what to do when button is clicked
-
         }
     }
 }

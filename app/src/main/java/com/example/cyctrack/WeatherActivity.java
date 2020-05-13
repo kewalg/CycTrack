@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -93,7 +94,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         btn_feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(WeatherActivity.this, ReviewActivity.class);
+                Intent i = new Intent(WeatherActivity.this, ListItem.class);
                 startActivity(i);
             }
         });
@@ -171,14 +172,14 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
     private class GetWeather extends AsyncTask<String, Void, String> {
 
-      //  ProgressDialog pd = new ProgressDialog(WeatherActivity.this);
+         ProgressDialog pd = new ProgressDialog(WeatherActivity.this);
 
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-        //    pd.setTitle("Please wait...");
-          //  pd.show();
+               pd.setTitle("Please wait...");
+              pd.show();
         }
 
 
@@ -203,22 +204,23 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
 
             if (s.contains("Error: Not found city")) {
-              //  pd.dismiss();
+                pd.dismiss();
                 return;
             }
             Gson gson = new Gson();
             Type mType = new TypeToken<OpenWeatherMap>() {
             }.getType();
             openWeatherMap = gson.fromJson(s, mType);
-           // pd.dismiss();
+            pd.dismiss();
 
 
             txtCity.setText(String.format("%s,%s", openWeatherMap.getName(), openWeatherMap.getSys().getCountry()));
             txtDescription.setText(String.format("%s", openWeatherMap.getWeather().get(0).getDescription()));
-            if (txtDescription.getText().toString().matches("cloudy")) {
-                tvSettext.setText("It is unsafe to ride today !!");
-            } else {
+            if (txtDescription.getText().toString().matches("clear sky") || txtDescription.getText().toString().matches("few clouds")) {
+
                 tvSettext.setText("It is a good day to ride !!");
+            } else {
+                tvSettext.setText("It is unsafe to ride today !!");
             }
             txtHumidity.setText(String.format("%d%%", openWeatherMap.getMain().getHumidity()));
             txtCelsius.setText(String.format("%.2f °C", openWeatherMap.getMain().getTemp()));
