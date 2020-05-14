@@ -26,19 +26,16 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".AboutActivity"></activity>
         <activity android:name=".SafetyActivity"></activity>
-        <activity android:name=".MapTestActivity"></activity>
-        <activity android:name=".SpeedActivity" />
-        <activity android:name=".MapBoxActivity" />
-        <activity android:name=".SplashScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.package.name.MyActivity" />
+        <activity android:name=".MapTestActivity">  <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <action android:name="com.package.name.MyActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".SpeedActivity" />
+        <activity android:name=".SplashScreen">
+
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".MapsActivity" />
         <activity android:name=".WeatherActivity">
 
 

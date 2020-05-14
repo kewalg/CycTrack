@@ -30,7 +30,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -39,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.cyctrack.Model.Weather;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineListener;
 import com.mapbox.android.core.location.LocationEnginePriority;
@@ -69,9 +73,13 @@ import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
 import com.mapbox.services.android.navigation.ui.v5.NavigationView;
+import com.mapbox.services.android.navigation.ui.v5.NavigationViewOptions;
 import com.mapbox.services.android.navigation.ui.v5.listeners.NavigationListener;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
+import com.mapbox.services.android.navigation.v5.navigation.NavigationEventListener;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
+import com.mapbox.services.android.navigation.v5.routeprogress.ProgressChangeListener;
+import com.mapbox.services.android.navigation.v5.routeprogress.RouteProgress;
 
 import java.io.IOException;
 import java.util.List;
@@ -86,7 +94,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
     private PermissionsManager permissionsManager;
     private MapView mapView;
-    private Button startButton, testButton;
+    private Button startButton;
     private MapboxMap map;
     private LocationEngine locationEngine;
     private LocationLayerPlugin locationLayerPlugin;
@@ -101,7 +109,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     private static final String TAG = "MainActivity";
     private String TEST = "NAVI_TEST";
     private EditText edt_search;
-    private Button btn_submit;
+    private Button btn_submit, btn_home;
     private TextView tv_speedtest;
     private SwitchCompat tglbtn;
 
@@ -114,18 +122,18 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
         mapView = findViewById(R.id.mapView);
         startButton = findViewById(R.id.startbutton);
+        btn_home = findViewById(R.id.homeBtn);
         edt_search = findViewById(R.id.edt_address);
         tglbtn = findViewById(R.id.tglNew);
         tv_speedtest = findViewById(R.id.tv_speed_latest);
         btn_submit = findViewById(R.id.btn_submit);
-        testButton = findViewById(R.id.testButton);
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
         startButton.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
-        testButton.setOnClickListener(this);
+        btn_home.setOnClickListener(this);
 
 
         tglbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -152,6 +160,8 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             //start the program if permission is granted
             doStuff();
         }
+
+
     }
 
     private void doStuff() {
@@ -365,8 +375,38 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         } else {
             float nCurrentSpeed = location.getSpeed() * 3.6f;
             tv_speedtest.setText(String.format("%.2f", nCurrentSpeed) + " km/h");
+
+
+            //Toast.makeText(this, "Current Speed is: " + (String.format("%.2f", nCurrentSpeed)), Toast.LENGTH_SHORT).show();
+
+
             if (nCurrentSpeed > 30.0) {
                 speedAlertPlayer.start();
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.custom_toast_red,
+                        (ViewGroup) findViewById(R.id.toast_layout_red));
+
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText((String.format("%.1f", nCurrentSpeed)));
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 0, -110);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
+            } else {
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.custom_toast,
+                        (ViewGroup) findViewById(R.id.toast_layout));
+
+                TextView text = (TextView) layout.findViewById(R.id.text);
+                text.setText((String.format("%.1f", nCurrentSpeed)));
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 0, -110);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
             }
         }
     }
@@ -399,14 +439,15 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                         .origin(originPosition)
                         .destination(destinationPosition)
                         .directionsProfile(DirectionsCriteria.PROFILE_CYCLING)
-                        .shouldSimulateRoute(true)
+                        .shouldSimulateRoute(false)
                         .build();
+
                 NavigationLauncher.startNavigation(MapTestActivity.this, options);
                 break;
             }
 
-            case R.id.testButton: {
-                Intent i = new Intent(MapTestActivity.this, AddItem.class);
+            case R.id.homeBtn: {
+                Intent i = new Intent(MapTestActivity.this, WeatherActivity.class);
                 startActivity(i);
             }
         }
@@ -481,15 +522,14 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         super.onDestroy();
     }
 
-    /*@Override
-    public void onNavigationFinished() {
-        Intent i = new Intent(MapTestActivity.this, ReviewActivity.class);
-        startActivity(i);
-    }*/
-
     @Override
     public void onCancelNavigation() {
         Log.d("Text", "onCancelNavigation");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -502,7 +542,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         Intent intent = new Intent(this, ReviewActivity.class);
         startActivity(intent);
     }
-
 
     @Override
     public void onNavigationRunning() {

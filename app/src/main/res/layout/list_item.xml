@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="Submitted Reviews: "
-        android:textColor="#fff"
+        android:textColor="#000000"
         android:textSize="25dp" />
 
     <ListView
@@ -22,5 +23,12 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="25dp"
         android:padding="10dp" />
+
+
+    <Button
+        android:id="@+id/btn_back_listitems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" />
 
 </RelativeLayout>

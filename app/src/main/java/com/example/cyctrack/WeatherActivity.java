@@ -172,14 +172,14 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
     private class GetWeather extends AsyncTask<String, Void, String> {
 
-         ProgressDialog pd = new ProgressDialog(WeatherActivity.this);
+//         ProgressDialog pd = new ProgressDialog(WeatherActivity.this);
 
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-               pd.setTitle("Please wait...");
-              pd.show();
+            //pd.setTitle("Please wait...");
+            //pd.show();
         }
 
 
@@ -204,14 +204,14 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
 
             if (s.contains("Error: Not found city")) {
-                pd.dismiss();
+                // pd.dismiss();
                 return;
             }
             Gson gson = new Gson();
             Type mType = new TypeToken<OpenWeatherMap>() {
             }.getType();
             openWeatherMap = gson.fromJson(s, mType);
-            pd.dismiss();
+            //pd.dismiss();
 
 
             txtCity.setText(String.format("%s,%s", openWeatherMap.getName(), openWeatherMap.getSys().getCountry()));

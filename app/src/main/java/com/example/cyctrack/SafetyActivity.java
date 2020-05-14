@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.CheckedTextView;
 
 public class SafetyActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 5000;
+    private static int SPLASH_TIME_OUT = 2000;
 
     CheckedTextView checkedview1, checkedview2, checkedview3, checkedview4, checkedview5;
 

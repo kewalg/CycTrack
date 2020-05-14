@@ -2,8 +2,11 @@ package com.example.cyctrack;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -19,6 +22,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cyctrack.Model.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,12 +30,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ListItem extends AppCompatActivity {
 
 
     ListView listView;
     ListAdapter adapter;
+    Button backButton;
     ProgressDialog loading;
 
     @Override
@@ -40,7 +46,16 @@ public class ListItem extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.list_item);
         listView = findViewById(R.id.lv_items);
+        backButton = findViewById(R.id.btn_back_listitems);
         getItems();
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ListItem.this, WeatherActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 
