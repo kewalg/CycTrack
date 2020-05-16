@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="@drawable/backgroundfinal2"
     tools:context=".AboutActivity">
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/tv_desc"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/open_sans"
         android:text="- ABOUT US -"
         android:textColor="#fff"
         android:textSize="25sp" />
@@ -26,6 +27,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text="@string/description"
         android:textColor="#fff"
@@ -35,5 +37,6 @@
         android:id="@+id/btn_home_aboutus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
         android:text="Home" />
 </RelativeLayout>

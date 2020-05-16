@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/open_sans"
         android:text="Route: "
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -24,6 +25,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/tv_route_final1"
+        android:fontFamily="@font/open_sans"
         android:text="Route"
         android:textSize="20sp" />
 
@@ -33,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_route_final"
         android:layout_marginLeft="10dp"
+        android:fontFamily="@font/open_sans"
         android:text="Rating: "
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -45,6 +48,7 @@
         android:layout_below="@id/tv_route_final"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/tv_rating_final1"
+        android:fontFamily="@font/open_sans"
         android:text="Rating"
         android:textSize="20sp" />
 
@@ -54,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_route_final"
         android:layout_toRightOf="@id/tv_rating_final"
+        android:fontFamily="@font/open_sans"
         android:text=" / 5"
         android:textSize="20sp" />
 
@@ -63,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_rating_final"
         android:layout_marginLeft="10dp"
+        android:fontFamily="@font/open_sans"
         android:text="Comment: "
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -75,6 +81,7 @@
         android:layout_below="@id/tv_rating_final"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/tv_feedback_final1"
+        android:fontFamily="@font/open_sans"
         android:text="Comment"
         android:textSize="20sp" />
 

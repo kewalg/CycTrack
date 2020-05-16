@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3a424d">
+    android:background="@drawable/backgroundfinal2">
 
     <TextView
         android:id="@+id/tv_heading1"
@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
+        android:fontFamily="@font/open_sans"
         android:text="Are You Forgetting Something??"
         android:textColor="#fff"
         android:textSize="24sp" />
@@ -20,8 +21,7 @@
         android:layout_height="500px"
         android:layout_below="@id/tv_heading1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/cycleimage" />
+        android:layout_marginTop="10dp" />
 
     <CheckedTextView
         android:id="@+id/ctv1"
@@ -31,6 +31,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text="Helmet"
         android:textColor="#fff" />
@@ -43,6 +44,7 @@
         android:layout_below="@id/ctv1"
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text="Lights"
         android:textColor="#fff" />
@@ -55,6 +57,7 @@
         android:layout_below="@id/ctv2"
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text="Knee-Pads"
         android:textColor="#fff" />
@@ -67,6 +70,7 @@
         android:layout_below="@id/ctv3"
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text="Arm Guards"
         android:textColor="#fff" />
@@ -79,6 +83,7 @@
         android:layout_below="@id/ctv4"
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text="Visibility Jacket"
         android:textColor="#fff" />

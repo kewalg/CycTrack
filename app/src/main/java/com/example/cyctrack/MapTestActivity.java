@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,7 +29,9 @@ import androidx.lifecycle.Lifecycle;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -68,6 +71,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.plugins.locationlayer.LocationLayerPlugin;
+import com.mapbox.mapboxsdk.plugins.locationlayer.Utils;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
 import com.mapbox.mapboxsdk.plugins.locationlayer.modes.RenderMode;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
@@ -90,7 +94,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback, LocationEngineListener, PermissionsListener, View.OnClickListener, LocationListener, NavigationListener {
+public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback,
+        LocationEngineListener, PermissionsListener, View.OnClickListener, LocationListener, NavigationListener {
 
     private PermissionsManager permissionsManager;
     private MapView mapView;
@@ -109,7 +114,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     private static final String TAG = "MainActivity";
     private String TEST = "NAVI_TEST";
     private EditText edt_search;
-    private Button btn_submit, btn_home;
+    private Button btn_submit, btn_home, btn_review;
     private TextView tv_speedtest;
     private SwitchCompat tglbtn;
 
@@ -123,6 +128,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         mapView = findViewById(R.id.mapView);
         startButton = findViewById(R.id.startbutton);
         btn_home = findViewById(R.id.homeBtn);
+        btn_review = findViewById(R.id.btn_review_route);
         edt_search = findViewById(R.id.edt_address);
         tglbtn = findViewById(R.id.tglNew);
         tv_speedtest = findViewById(R.id.tv_speed_latest);
@@ -134,7 +140,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         startButton.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
         btn_home.setOnClickListener(this);
-
+        btn_review.setOnClickListener(this);
 
         tglbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -149,7 +155,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 }
             }
         });
-
         //added because new access fine location policies, imported class..
         //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         //check permission
@@ -160,8 +165,26 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             //start the program if permission is granted
             doStuff();
         }
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().trim().length() == 0) {
+                    btn_review.setEnabled(false);
+                    btn_submit.setEnabled(false);
+                } else {
+                    btn_review.setEnabled(true);
+                    btn_submit.setEnabled(true);
+                }
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     private void doStuff() {
@@ -197,7 +220,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
     private void show() {
         String destination = edt_search.getText().toString();
-
         /*Intent myIntent = new Intent(MapTestActivity.this, AddItem.class);
         myIntent.putExtra("destionation_key", destination);
         startActivity(myIntent);*/
@@ -217,17 +239,38 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
 
             destinationPosition = Point.fromLngLat(longitude, latitude);
-            originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude());
-            getRoute(originPosition, destinationPosition);
+            //saving destination point into shared preferences
+            sharedPreferences = getSharedPreferences("Destination_lat_for_nav", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor_dest_lat = sharedPreferences.edit();
+            editor_dest_lat.putString("Destination_lat_for_nav_value", String.valueOf(latitude));
+            editor_dest_lat.apply();
 
+            sharedPreferences = getSharedPreferences("Destination_long_for_nav", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor_dest_long = sharedPreferences.edit();
+            editor_dest_long.putString("Destination_long_for_nav_value", String.valueOf(longitude));
+            editor_dest_long.apply();
+
+
+            originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude());
+            //saving source point into shared preferences
+            sharedPreferences = getSharedPreferences("Source_lat_for_nav", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor_source_lat = sharedPreferences.edit();
+            editor_source_lat.putString("Source_lat_for_nav_value", String.valueOf(originLocation.getLatitude()));
+            editor_source_lat.apply();
+
+            sharedPreferences = getSharedPreferences("Source_long_for_nav", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor_source_long = sharedPreferences.edit();
+            editor_source_long.putString("Source_long_for_nav_value", String.valueOf(originLocation.getLongitude()));
+            editor_source_long.apply();
+
+            getRoute(originPosition, destinationPosition);
 
             startButton.setEnabled(true);
             CameraPosition position = new CameraPosition.Builder()
                     .target(new LatLng(latitude, longitude))
                     .zoom(15)
                     .build();
-            map.animateCamera(CameraUpdateFactory
-                    .newCameraPosition(position), 2000);
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(position), 2000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -237,7 +280,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 .query(originPosition)
                 .geocodingTypes(GeocodingCriteria.TYPE_ADDRESS)
                 .build();
-
         reverseGeocode.enqueueCall(new Callback<GeocodingResponse>() {
             @Override
             public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
@@ -246,12 +288,10 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                     String source_address_complete = response.body().features().get(0).placeName();
                     String source_address_short = response.body().features().get(0).text();
 
-
                     sharedPreferences = getSharedPreferences("Source_key", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("Source_key_value", source_address_short);
                     editor.apply();
-
 
                     Point firstResultPoint = results.get(0).center();
                     //Log.d(TAG, "onResponse: " + firstResultPoint.coordinates());
@@ -354,6 +394,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                     public void onFailure(Call<DirectionsResponse> call, Throwable t) {
                         Log.e(TAG, "Error" + t.getMessage());
                     }
+
                 });
     }
 
@@ -375,17 +416,12 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         } else {
             float nCurrentSpeed = location.getSpeed() * 3.6f;
             tv_speedtest.setText(String.format("%.2f", nCurrentSpeed) + " km/h");
-
-
             //Toast.makeText(this, "Current Speed is: " + (String.format("%.2f", nCurrentSpeed)), Toast.LENGTH_SHORT).show();
-
-
             if (nCurrentSpeed > 30.0) {
                 speedAlertPlayer.start();
                 LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.custom_toast_red,
                         (ViewGroup) findViewById(R.id.toast_layout_red));
-
                 TextView text = (TextView) layout.findViewById(R.id.text);
                 text.setText((String.format("%.1f", nCurrentSpeed)));
 
@@ -439,16 +475,22 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                         .origin(originPosition)
                         .destination(destinationPosition)
                         .directionsProfile(DirectionsCriteria.PROFILE_CYCLING)
-                        .shouldSimulateRoute(false)
+                        .shouldSimulateRoute(true)
                         .build();
-
                 NavigationLauncher.startNavigation(MapTestActivity.this, options);
+                //  Intent i = new Intent(MapTestActivity.this, MapNavActivity.class);
+                //  startActivity(i);
                 break;
             }
 
             case R.id.homeBtn: {
                 Intent i = new Intent(MapTestActivity.this, WeatherActivity.class);
                 startActivity(i);
+            }
+            case R.id.btn_review_route: {
+                Intent i = new Intent(MapTestActivity.this, AddItem.class);
+                startActivity(i);
+
             }
         }
     }
@@ -477,10 +519,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onStart() {
         super.onStart();
         mapView.onStart();
-       /* if (locationEngine != null) {
-            locationEngine.requestLocationUpdates();
-            locationEngine.addLocationEngineListener(this);
-        }*/
     }
 
     @Override
@@ -499,10 +537,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onStop() {
         super.onStop();
         mapView.onStop();
-       /* if (locationEngine != null) {
-            locationEngine.removeLocationEngineListener(this);
-            locationEngine.removeLocationUpdates();
-        }*/
     }
 
     @Override
@@ -520,11 +554,12 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //mapView.onDestroy();
     }
 
     @Override
     public void onCancelNavigation() {
-        Log.d("Text", "onCancelNavigation");
+        finish();
     }
 
     @Override
@@ -534,13 +569,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onNavigationFinished() {
-        // End the navigation session
-        if (navigationListener != null) {
-            navigationListener.onNavigationFinished();
-            Log.d("oasihdlasdhasldhashdjlasd", "finishedfinishedfinishedfinishedfinishedfinishedfinishedfinished");
-        }
-        Intent intent = new Intent(this, ReviewActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     @Override

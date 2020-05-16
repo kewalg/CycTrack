@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg2"
+    android:background="@drawable/backgroundfinal2"
     tools:context=".SplashScreen">
 
 
@@ -15,6 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="250dp"
+        android:fontFamily="@font/open_sans"
         android:text="We are CycTrack!"
         android:textColor="#fff"
         android:textSize="25sp"

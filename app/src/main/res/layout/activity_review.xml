@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg2blur">
+    android:background="@drawable/backgroundfinal2">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
         android:layout_below="@id/home_btn"
         android:text="Do You Want to Review this Route?"
         android:textColor="#fff"
+
         android:textSize="50sp" />
 
     <Button
@@ -20,17 +22,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:fontFamily="@font/open_sans"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/custom_button"
+
         android:padding="10dp"
         android:text="Submit Reviews"
-        android:textColor="#fff" />
+        android:textColor="#000" />
 
     <Button
         android:id="@+id/home_btn"
+
         android:layout_width="wrap_content"
+        android:fontFamily="@font/open_sans"
         android:layout_height="wrap_content"
         android:text="Home" />
 

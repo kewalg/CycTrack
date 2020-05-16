@@ -24,26 +24,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AboutActivity"></activity>
-        <activity android:name=".SafetyActivity"></activity>
-        <activity android:name=".MapTestActivity">  <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <action android:name="com.package.name.MyActivity" />
+        <activity android:name=".MapNavActivity"></activity>
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".SafetyActivity" />
+        <activity android:name=".MapTestActivity">
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        </activity>
         <activity android:name=".SpeedActivity" />
         <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.package.name.MyActivity" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".WeatherActivity">
-
-
-        </activity>
-        <activity android:name=".ReviewActivity">
-
-
-        </activity>
+        <activity android:name=".WeatherActivity" />
+        <activity android:name=".ReviewActivity" />
         <activity android:name=".AddItem" />
         <activity android:name=".ListItem" />
 
@@ -53,6 +50,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <uses-library
             android:name="org.apache.http.legacy"

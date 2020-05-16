@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg2blur">
+    android:background="@drawable/backgroundfinal2">
 
 
     <TextView
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/editName"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/open_sans"
         android:text="Enter FeedBack Below:"
         android:textColor="#fff"
         android:textSize="25dp" />
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:backgroundTint="#fff"
+        android:fontFamily="@font/open_sans"
         android:hint="Enter your name"
         android:textColorHint="#fff" />
 
@@ -33,6 +35,7 @@
         android:layout_below="@id/editName"
         android:layout_centerHorizontal="true"
         android:backgroundTint="#fff"
+        android:fontFamily="@font/open_sans"
         android:hint="Enter your comments here"
         android:textColorHint="#fff" />
 
@@ -42,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editFeedback"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/open_sans"
         android:text="Submit" />
 
     <Button
@@ -50,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnSubmit"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/open_sans"
         android:text="View Feedbacks" />
 
 

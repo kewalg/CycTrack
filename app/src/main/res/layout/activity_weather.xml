@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg2blur"
+    android:background="@drawable/backgroundfinal2"
     android:orientation="vertical"
     tools:context=".WeatherActivity">
 
@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/open_sans"
         android:text="Weather At Your Current Location"
         android:textColor="#fff"
         android:textSize="20dp" />
@@ -24,10 +25,12 @@
         android:layout_below="@id/tv_title_weather"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/open_sans"
         android:text="city"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/txtCelsius"
@@ -36,6 +39,7 @@
         android:layout_below="@id/txtCity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/open_sans"
         android:text="celcius"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -50,6 +54,7 @@
         android:layout_below="@id/txtCelsius"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/open_sans"
         android:text="description"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -63,6 +68,7 @@
         android:layout_below="@id/txtDescription"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/open_sans"
         android:text="humidity"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -76,7 +82,8 @@
         android:layout_height="250dp"
         android:layout_below="@id/txtHumidity"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/open_sans" />
 
     <TextView
         android:id="@+id/tv_settext"
@@ -84,6 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/open_sans"
         android:text="test"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -98,7 +106,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="70dp"
-        android:drawableTop="@drawable/feedback_icon1"
+        android:fontFamily="@font/open_sans"
         android:text="Maps" />
 
     <Button
@@ -109,6 +117,7 @@
         android:layout_marginLeft="21dp"
         android:layout_marginBottom="71dp"
         android:layout_toRightOf="@id/btn_maps1"
+        android:fontFamily="@font/open_sans"
         android:text="View Feedback" />
 
     <TextView
@@ -118,6 +127,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
+        android:fontFamily="@font/open_sans"
         android:text="About Us"
         android:textColor="#fff" />
 

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroundfinal2"
     tools:context=".MapTestActivity">
 
     <com.mapbox.mapboxsdk.maps.MapView
@@ -25,6 +26,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@id/btn_submit"
+        android:fontFamily="@font/open_sans"
         android:hint="Enter address"
         android:inputType="textCapWords"
         android:padding="10dp" />
@@ -34,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:fontFamily="@font/open_sans"
         android:text="Submit" />
 
 
@@ -45,6 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"
         android:enabled="false"
+        android:fontFamily="@font/open_sans"
         android:text="Start Navigation" />
 
 
@@ -53,6 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:fontFamily="@font/open_sans"
         android:text="Home" />
 
     <androidx.appcompat.widget.SwitchCompat
@@ -74,8 +79,20 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toRightOf="@id/tglNew"
+        android:fontFamily="@font/open_sans"
         android:text="0.0 km/h"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btn_review_route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tglNew"
+        android:fontFamily="@font/open_sans"
+        android:text="Review" />
 
 
 </RelativeLayout>
