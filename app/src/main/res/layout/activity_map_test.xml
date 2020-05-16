@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundfinal2"
+    android:background="@drawable/testbg1gimpblur"
     tools:context=".MapTestActivity">
 
     <com.mapbox.mapboxsdk.maps.MapView
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/startbutton"
         android:layout_below="@id/edt_address"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="9dp"
         android:layout_marginBottom="10dp"
         mapbox:mapbox_cameraZoom="15" />
 
@@ -22,61 +22,91 @@
         android:id="@+id/edt_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/homeBtn"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@id/btn_submit"
+        android:backgroundTint="#fff"
         android:fontFamily="@font/open_sans"
         android:hint="Enter address"
         android:inputType="textCapWords"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:textColorHighlight="#fff"
+        android:textColorHint="#fff"
+        android:textColorLink="#fff" />
+
 
     <Button
         android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/homeBtn"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/communications"
         android:fontFamily="@font/open_sans"
-        android:text="Submit" />
-
+        android:textColor="#fff" />
 
     <Button
         android:id="@+id/startbutton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_selector1"
         android:enabled="false"
         android:fontFamily="@font/open_sans"
-        android:text="Start Navigation" />
+        android:text="Start Navigation"
+        android:textColor="#fff" />
 
 
     <Button
         android:id="@+id/homeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:fontFamily="@font/open_sans"
-        android:text="Home" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/housing1"
+        android:fontFamily="@font/open_sans" />
+
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/tglNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/startbutton"
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toRightOf="@id/homeBtn"
+        android:layout_marginBottom="15dp"
         android:thumb="@drawable/thumb1"
         app:track="@drawable/track" />
+
+    <TextView
+        android:id="@+id/tv_ballon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/startbutton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toRightOf="@id/tglNew"
+        android:gravity="center"
+        android:text="\?"
+        android:textColor="#000"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_speed_latest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:layout_toRightOf="@id/tglNew"
         android:fontFamily="@font/open_sans"
@@ -88,11 +118,13 @@
         android:id="@+id/btn_review_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/tglNew"
+        android:layout_above="@id/startbutton"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button_selector1"
         android:fontFamily="@font/open_sans"
-        android:text="Review" />
-
+        android:text="Review Route"
+        android:textColor="#fff" />
 
 </RelativeLayout>

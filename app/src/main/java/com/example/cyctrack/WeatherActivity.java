@@ -1,6 +1,7 @@
 package com.example.cyctrack;
 
 // Importing necessary modules
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -10,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -112,6 +114,8 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
                 startActivity(i);
             }
         });
+
+        tvAboutus.setPaintFlags(tvAboutus.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     // ASk permission for location services
@@ -164,6 +168,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         new GetWeather().execute(Common.apiRequest(String.valueOf(lat), String.valueOf(lng)));
 
     }
+
     //predefined function
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {

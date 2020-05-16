@@ -13,7 +13,7 @@ import com.example.cyctrack.Model.Main;
 public class SplashScreen extends AppCompatActivity {
 
     // setting splash screen timeout to be 2 secs
-    private static int SPLASH_TIME_OUT = 2000;
+    private static int SPLASH_TIME_OUT = 6000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

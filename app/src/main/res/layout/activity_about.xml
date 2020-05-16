@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundfinal2"
+    android:background="@drawable/testbg1gimpblur"
     tools:context=".AboutActivity">
 
     <TextView
@@ -35,8 +35,10 @@
 
     <Button
         android:id="@+id/btn_home_aboutus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="Home" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/housing1"
+        android:fontFamily="@font/open_sans" />
 </RelativeLayout>

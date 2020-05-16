@@ -2,17 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundfinal2">
+    android:background="@drawable/testbg1gimpblur">
 
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/open_sans"
-        android:text="Rate Your route from: "
+        android:text="Review Your Route"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/tv_source_route"
@@ -44,10 +45,13 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="250dp"
-        android:backgroundTint="#fff"
+        android:backgroundTint="#ea1646"
         android:fontFamily="@font/open_sans"
         android:hint="Enter your name"
-        android:textColorHint="#fff" />
+        android:textColor="#fff"
+        android:textColorHighlight="#fff"
+        android:textColorHint="#fff"
+        android:textColorLink="#fff" />
 
     <EditText
         android:id="@+id/editFeedback"
@@ -55,10 +59,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editName"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="#fff"
+        android:backgroundTint="#ea1646"
         android:fontFamily="@font/open_sans"
         android:hint="Comment here please"
-        android:textColorHint="#fff" />
+        android:textColor="#fff"
+        android:textColorHighlight="#fff"
+        android:textColorHint="#fff"
+
+        android:textColorLink="#fff" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -75,10 +83,11 @@
         android:layout_marginEnd="161dp"
         android:layout_marginRight="161dp"
         android:layout_marginBottom="236dp"
+        android:background="@drawable/button_selector1"
         android:fontFamily="@font/open_sans"
         android:padding="10dp"
         android:text="submit"
-        android:textColor="#000" />
+        android:textColor="#fff" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -89,6 +98,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="76dp"
         android:layout_marginRight="76dp"
-        android:layout_marginBottom="308dp" />
+        android:layout_marginBottom="308dp"
+        android:theme="@style/RatingBar" />
 
 </RelativeLayout>

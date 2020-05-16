@@ -4,21 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundfinal2"
+    android:background="@drawable/testbg1gimpblur"
     tools:context=".SplashScreen">
-
 
     <TextView
         android:id="@+id/tv_title_splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="250dp"
+        android:elevation="100dp"
         android:fontFamily="@font/open_sans"
         android:text="We are CycTrack!"
         android:textColor="#fff"
         android:textSize="25sp"
         android:textStyle="bold" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title_splash"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/button_selector1"
+        android:text="test button" />
+
 
 </RelativeLayout>

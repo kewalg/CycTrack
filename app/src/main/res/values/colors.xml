@@ -4,4 +4,13 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="mapboxBlue">#4264fb</color>
+    <!-- Green -->
+    <color name="green_temp">#01ef0c</color>
+    <color name="white">#ffffff</color>
+
+
+    <color name="ui_color">#ea1646</color>
+    <color name="green_dark">#159204</color>
+    <color name="bright_green">#01ef0c</color>
+    <color name="button_green">#10a54a</color>
 </resources>

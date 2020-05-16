@@ -15,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans"
         android:text="Route: "
+        android:textColor="@color/ui_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -27,6 +28,7 @@
         android:layout_toRightOf="@id/tv_route_final1"
         android:fontFamily="@font/open_sans"
         android:text="Route"
+        android:textColor="#fff"
         android:textSize="20sp" />
 
     <TextView
@@ -37,6 +39,7 @@
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/open_sans"
         android:text="Rating: "
+        android:textColor="@color/ui_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -50,6 +53,7 @@
         android:layout_toRightOf="@id/tv_rating_final1"
         android:fontFamily="@font/open_sans"
         android:text="Rating"
+        android:textColor="#fff"
         android:textSize="20sp" />
 
     <TextView
@@ -60,6 +64,7 @@
         android:layout_toRightOf="@id/tv_rating_final"
         android:fontFamily="@font/open_sans"
         android:text=" / 5"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <TextView
@@ -68,8 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_rating_final"
         android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/open_sans"
         android:text="Comment: "
+        android:textColor="@color/ui_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -80,9 +87,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_rating_final"
         android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_toRightOf="@id/tv_feedback_final1"
         android:fontFamily="@font/open_sans"
         android:text="Comment"
+        android:textColor="#fff"
         android:textSize="20sp" />
 
 

@@ -25,6 +25,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    configurations {
+        cleanedAnnotations
+        compile.exclude group: 'org.jetbrains' , module:'annotations'
+    }
 
 }
 
@@ -50,4 +54,5 @@ dependencies {
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.5.3'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation:0.13.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.13.0'
+    implementation "com.github.skydoves:balloon:1.1.6"
 }

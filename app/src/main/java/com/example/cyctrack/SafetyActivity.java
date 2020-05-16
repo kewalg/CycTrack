@@ -1,9 +1,11 @@
 package com.example.cyctrack;
 
 // Importing necessary modules
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -26,7 +28,6 @@ public class SafetyActivity extends AppCompatActivity {
 
         // Casting variables with connection to xml file
         checkedview1 = findViewById(R.id.ctv1);
-
         // Setting the check box to be ticked
         checkedview1.setChecked(true);
         checkedview2 = findViewById(R.id.ctv2);

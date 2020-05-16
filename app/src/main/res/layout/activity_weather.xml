@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundfinal2"
+    android:background="@drawable/testbg1gimpblur"
     android:orientation="vertical"
     tools:context=".WeatherActivity">
 
@@ -13,10 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans"
-        android:text="Weather At Your Current Location"
+        android:text="Hi, Whats'up!?"
         android:textColor="#fff"
-        android:textSize="20dp" />
+        android:textSize="50dp" />
 
     <TextView
         android:id="@+id/txtCity"
@@ -24,13 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title_weather"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/open_sans"
-        android:text="city"
+        android:text="City"
         android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textSize="35sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtCelsius"
@@ -38,13 +38,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtCity"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans"
-        android:text="celcius"
+        android:text="Temperature"
         android:textColor="#fff"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 
     <TextView
@@ -53,13 +52,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtCelsius"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans"
-        android:text="description"
+        android:text="Forecast"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtHumidity"
@@ -67,19 +65,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtDescription"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/open_sans"
-        android:text="humidity"
+        android:text="Humidity"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textStyle="bold" />
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_below="@id/txtHumidity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -92,33 +88,54 @@
         android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/open_sans"
-        android:text="test"
+        android:text="Prediction"
         android:textColor="#fff"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_maps1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/tv_aboutus"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/tv_for_centre"
+        android:background="@drawable/button_selector2"
+        android:drawableTop="@drawable/mapicon"
         android:fontFamily="@font/open_sans"
-        android:text="Maps" />
+        android:paddingLeft="30dp"
+        android:paddingTop="10dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="5dp"
+        android:text="Start Ride"
+        android:textColor="#fff" />
+
+    <TextView
+        android:id="@+id/tv_for_centre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_aboutus"
+        android:layout_centerHorizontal="true"
+        android:text="."
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btn_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginBottom="71dp"
-        android:layout_toRightOf="@id/btn_maps1"
+        android:layout_above="@id/tv_aboutus"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/tv_for_centre"
+        android:background="@drawable/button_selector2"
+        android:drawableTop="@drawable/feedbackicon"
         android:fontFamily="@font/open_sans"
-        android:text="View Feedback" />
+        android:paddingLeft="30dp"
+        android:paddingTop="10dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="5dp"
+        android:text="Feedbacks"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/tv_aboutus"
@@ -126,9 +143,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/open_sans"
         android:text="About Us"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:textStyle="bold" />
 
 </RelativeLayout>

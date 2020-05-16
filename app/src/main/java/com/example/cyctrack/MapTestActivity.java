@@ -1,5 +1,6 @@
 package com.example.cyctrack;
 // Importing necessary modules
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
@@ -25,9 +27,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Lifecycle;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
@@ -84,6 +88,9 @@ import com.mapbox.services.android.navigation.v5.navigation.NavigationEventListe
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 import com.mapbox.services.android.navigation.v5.routeprogress.ProgressChangeListener;
 import com.mapbox.services.android.navigation.v5.routeprogress.RouteProgress;
+import com.skydoves.balloon.ArrowOrientation;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
 
 import java.io.IOException;
 import java.util.List;
@@ -116,7 +123,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     private String TEST = "NAVI_TEST";
     private EditText edt_search;
     private Button btn_submit, btn_home, btn_review;
-    private TextView tv_speedtest;
+    private TextView tv_speedtest, tv_ballon;
     private SwitchCompat tglbtn;
 
     @Override
@@ -135,6 +142,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         edt_search = findViewById(R.id.edt_address);
         tglbtn = findViewById(R.id.tglNew);
         tv_speedtest = findViewById(R.id.tv_speed_latest);
+        tv_ballon = findViewById(R.id.tv_ballon);
         btn_submit = findViewById(R.id.btn_submit);
 
         // Getting access to Notification Service
@@ -147,6 +155,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         btn_submit.setOnClickListener(this);
         btn_home.setOnClickListener(this);
         btn_review.setOnClickListener(this);
+        tv_ballon.setOnClickListener(this);
 
 
         // Implementing a toggle button for DND functionality
@@ -195,11 +204,46 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                     btn_submit.setEnabled(true);
                 }
             }
+
             // Keep it editable as user can wipe out the data
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
+        tv_ballon.setPaintFlags(tv_ballon.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+
+        Balloon balloon = new Balloon.Builder(getApplicationContext())
+                .setArrowSize(15)
+                .setArrowOrientation(ArrowOrientation.BOTTOM)
+                .setArrowVisible(true)
+                .setWidthRatio(0.8f)
+                .setHeight(100)
+                .setTextSize(15f)
+                .setArrowPosition(0.45f)
+                .setCornerRadius(4f)
+                .setAlpha(0.9f)
+                .setText("This is Do Not Disturb mode. All the incoming calls will be silenced.")
+                .setTextColor(ContextCompat.getColor(this, R.color.white))
+                .setBackgroundColor(ContextCompat.getColor(this, R.color.ui_color))
+                .setBalloonAnimation(BalloonAnimation.FADE)
+                .build();
+
+
+        tv_ballon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                balloon.show(tv_ballon);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        balloon.dismiss();
+                    }
+                }, 2000);
+            }
+        });
+
+
     }
 
     //Get access to location service
@@ -456,7 +500,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 text.setText((String.format("%.1f", nCurrentSpeed)));
 
                 Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 0, -110);
+                toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 30, -110);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();
@@ -469,7 +513,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 text.setText((String.format("%.1f", nCurrentSpeed)));
 
                 Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 0, -110);
+                toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 30, -110);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();
