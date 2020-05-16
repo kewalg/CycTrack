@@ -1,5 +1,6 @@
 package com.example.cyctrack;
 
+// Importing necessary modules
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.view.WindowManager;
 import com.example.cyctrack.Model.Main;
 
 public class SplashScreen extends AppCompatActivity {
+
+    // setting splash screen timeout to be 2 secs
     private static int SPLASH_TIME_OUT = 2000;
 
     @Override
@@ -18,6 +21,7 @@ public class SplashScreen extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 
+        //// when time runs out, putting an intent to go to weather activity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

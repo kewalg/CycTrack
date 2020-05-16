@@ -1,5 +1,6 @@
 package com.example.cyctrack;
 
+// Importing necessary modules
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,8 +10,12 @@ import android.view.WindowManager;
 import android.widget.CheckedTextView;
 
 public class SafetyActivity extends AppCompatActivity {
+
+    // Setting splash time out to be 2 secs
     private static int SPLASH_TIME_OUT = 2000;
 
+
+    // Declaring variables
     CheckedTextView checkedview1, checkedview2, checkedview3, checkedview4, checkedview5;
 
     @Override
@@ -19,7 +24,10 @@ public class SafetyActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_safety);
 
+        // Casting variables with connection to xml file
         checkedview1 = findViewById(R.id.ctv1);
+
+        // Setting the check box to be ticked
         checkedview1.setChecked(true);
         checkedview2 = findViewById(R.id.ctv2);
         checkedview2.setChecked(true);
@@ -30,6 +38,8 @@ public class SafetyActivity extends AppCompatActivity {
         checkedview5 = findViewById(R.id.ctv5);
         checkedview5.setChecked(true);
 
+
+        // when time runs out, putting an intent to go to Map activity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

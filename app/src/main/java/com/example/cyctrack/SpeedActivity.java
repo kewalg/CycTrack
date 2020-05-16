@@ -1,5 +1,6 @@
 package com.example.cyctrack;
 
+// Importing necessary modules
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +22,8 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speed);
+
+        // Declaring mediaplayer by accessing the file from raw folder
         final MediaPlayer speedalert = MediaPlayer.create(SpeedActivity.this,R.raw.speedalert);
         //added because new access fine location policies, imported class..
         //ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -36,19 +39,28 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
 
     @Override
     public void onLocationChanged(Location location) {
+
+        // Declaring mediaplayer to get access from the media file in Raw folder
         final MediaPlayer speedAlertPlayer = MediaPlayer.create(SpeedActivity.this,R.raw.speedalert);
         TextView txt = (TextView) this.findViewById(R.id.textView1);
+
+        // If location not found, set text in the text view as -.- km/h
         if (location==null){
             txt.setText("-.- km/h");
         } else {
+
+            // Else, calculate current speed based on location change
             float nCurrentSpeed = location.getSpeed() * 3.6f;
             txt.setText(String.format("%.2f", nCurrentSpeed)+ " km/h" );
+
+            // if the current speed is greater than 30 kmph, then play the sound
             if (nCurrentSpeed > 30.0) {
                 speedAlertPlayer.start();
             }
         }
     }
 
+    // If permission granted then call doStuff() else finish the activity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1000) {
@@ -65,7 +77,6 @@ public class SpeedActivity extends AppCompatActivity implements LocationListener
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (lm != null){
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
-            //commented, this is from the old version
             // this.onLocationChanged(null);
         }
         Toast.makeText(this,"Waiting for GPS connection!", Toast.LENGTH_SHORT).show();

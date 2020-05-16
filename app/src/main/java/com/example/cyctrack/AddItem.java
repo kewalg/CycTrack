@@ -1,5 +1,6 @@
 package com.example.cyctrack;
 
+// Importing required modules
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,7 +37,7 @@ import java.util.Map;
 
 public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
-
+    // Declaring variables
     EditText editName, editFeedback;
     Button btnSubmit;
     TextView tvRating, tv_source_Route, tv_dest_Route;
@@ -49,7 +50,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
+        // Casting variables for connection with xml file
         setContentView(R.layout.add_item);
         editName = findViewById(R.id.editName);
         editFeedback = findViewById(R.id.editFeedback);
@@ -58,6 +59,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         tv_dest_Route = findViewById(R.id.tv_dest_route);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
+        //Getting the rating value in float as given by the user
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 
             @Override
@@ -66,9 +68,12 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 ratedValue = ratingBar.getRating();
             }
         });
+
+        // Making button clickable
         btnSubmit.setOnClickListener(this);
 
         // tvRoute.setText(getIntent().getStringExtra("destionation_key"));
+        // Using shared preferences to get String values of source and destination address to review the route
         SharedPreferences source_result = getSharedPreferences("Source_key", Context.MODE_PRIVATE);
         String source_value = source_result.getString("Source_key_value", "Data Not Found");
         tv_source_Route.setText(source_value);
@@ -81,8 +86,6 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
 
     //This is the part where data is transferred from Your Android phone to Sheet by using HTTP Rest API calls
-
-
     private void addItemToSheet() {
         final ProgressDialog loading = ProgressDialog.show(this, "Submitting Review", "Please wait");
 
@@ -94,6 +97,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         final String dest = tv_dest_Route.getText().toString().trim();
         final String route = source + " - " + dest;
 
+        //Post method in Google Apps Script  and the url to access the google script
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxzZJrl-RHe_61AfbWPH22pOSu8X_QXQrHFWQjbfiIWpJLDxP4/exec",
                 new Response.Listener<String>() {
                     @Override
@@ -110,6 +114,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                     }
                 }
         ) {
+            //HashMap to put fields from front end to Google Apps Script
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> parmas = new HashMap<>();
@@ -130,7 +135,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         queue.add(stringRequest);
     }
 
-
+    // If clicked on button Submit, adding items to Google Sheet
     @Override
     public void onClick(View v) {
         if (v == btnSubmit) {

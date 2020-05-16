@@ -1,5 +1,5 @@
 package com.example.cyctrack;
-
+// Importing necessary modules
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -93,10 +93,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+// Extending Main class with all Location listeners, Permission checks and on Map call
 public class MapTestActivity extends AppCompatActivity implements OnMapReadyCallback,
         LocationEngineListener, PermissionsListener, View.OnClickListener, LocationListener, NavigationListener {
 
+    // Delcaring variables
     private PermissionsManager permissionsManager;
     private MapView mapView;
     private Button startButton;
@@ -122,9 +123,11 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // To get instance with help of Mapbox access token
         Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_map_test);
 
+        // Casting variables to map to xml file
         mapView = findViewById(R.id.mapView);
         startButton = findViewById(R.id.startbutton);
         btn_home = findViewById(R.id.homeBtn);
@@ -133,23 +136,32 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         tglbtn = findViewById(R.id.tglNew);
         tv_speedtest = findViewById(R.id.tv_speed_latest);
         btn_submit = findViewById(R.id.btn_submit);
+
+        // Getting access to Notification Service
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        // Setting on click listener on all the buttons on the Map screen
         startButton.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
         btn_home.setOnClickListener(this);
         btn_review.setOnClickListener(this);
 
+
+        // Implementing a toggle button for DND functionality
         tglbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                // If the toggle button is checked, then access notification manager to turn on DND Mode
                 if (isChecked) {
                     changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
                     Toast.makeText(MapTestActivity.this, "DND Enabled!", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    // If the toggle button isnt check, then interrupt accessing the notification manager
                     changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_ALL);
                     Toast.makeText(MapTestActivity.this, "DND Disabled!", Toast.LENGTH_SHORT).show();
                 }
@@ -170,23 +182,27 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
+            // If the edit text to enter destination address is empty set usability of the buttons as false
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().trim().length() == 0) {
                     btn_review.setEnabled(false);
                     btn_submit.setEnabled(false);
                 } else {
+
+                    // As user types anything in the address bar, length is greater than zero and hence enable the buttons
                     btn_review.setEnabled(true);
                     btn_submit.setEnabled(true);
                 }
             }
-
+            // Keep it editable as user can wipe out the data
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
     }
 
+    //Get access to location service
     private void doStuff() {
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (lm != null) {
@@ -200,6 +216,8 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
+
+            // Request GPS provider for location updates everytime the location changes
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
             //commented, this is from the old version
             // this.onLocationChanged(null);
@@ -207,6 +225,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         Toast.makeText(this, "Waiting for GPS connection!", Toast.LENGTH_SHORT).show();
     }
 
+    // CHecking for minimum api level and then granting access
     protected void changeInterruptionFiler(int interruptionFilter) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // If api level minimum 23
             if (mNotificationManager.isNotificationPolicyAccessGranted()) {
@@ -218,17 +237,17 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
+    //Get in string the address typed in edit text
     private void show() {
         String destination = edt_search.getText().toString();
-        /*Intent myIntent = new Intent(MapTestActivity.this, AddItem.class);
-        myIntent.putExtra("destionation_key", destination);
-        startActivity(myIntent);*/
+
+        // Using shared preferences to share the data retrieved from address bar to Add Item class using key value pair
         sharedPreferences = getSharedPreferences("Destination_key", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("Destination_key_value", destination);
         editor.apply();
 
-
+        // Using Geocoder to get the coordinates from the Location Name( latitude and longitude)
         Geocoder mGeocoder = new Geocoder(getApplicationContext());
         try {
             List<Address> mResultLocation = mGeocoder.getFromLocationName(destination, 1);
@@ -237,35 +256,45 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
 
             Log.d("Address", "Destination Address: " + destination);
 
-
+            // Putting latitude and longitude in one point
             destinationPosition = Point.fromLngLat(longitude, latitude);
-            //saving destination point into shared preferences
+
+            //saving destination latitude point into shared preferences
             sharedPreferences = getSharedPreferences("Destination_lat_for_nav", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor_dest_lat = sharedPreferences.edit();
             editor_dest_lat.putString("Destination_lat_for_nav_value", String.valueOf(latitude));
             editor_dest_lat.apply();
 
+            //saving destination longitude point into shared preferences
             sharedPreferences = getSharedPreferences("Destination_long_for_nav", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor_dest_long = sharedPreferences.edit();
             editor_dest_long.putString("Destination_long_for_nav_value", String.valueOf(longitude));
             editor_dest_long.apply();
 
-
+            // Putting latitude and longitude in one point for origin using get function
             originPosition = Point.fromLngLat(originLocation.getLongitude(), originLocation.getLatitude());
+
             //saving source point into shared preferences
             sharedPreferences = getSharedPreferences("Source_lat_for_nav", Context.MODE_PRIVATE);
+
+            //saving source latitude point into shared preferences
             SharedPreferences.Editor editor_source_lat = sharedPreferences.edit();
             editor_source_lat.putString("Source_lat_for_nav_value", String.valueOf(originLocation.getLatitude()));
             editor_source_lat.apply();
 
+            //saving source longitude point into shared preference
             sharedPreferences = getSharedPreferences("Source_long_for_nav", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor_source_long = sharedPreferences.edit();
             editor_source_long.putString("Source_long_for_nav_value", String.valueOf(originLocation.getLongitude()));
             editor_source_long.apply();
 
+            // Getting the route using origin point and destination point
             getRoute(originPosition, destinationPosition);
 
+            // Enabling start button once the route is traced
             startButton.setEnabled(true);
+
+            // Setting camera position once dstination point is set
             CameraPosition position = new CameraPosition.Builder()
                     .target(new LatLng(latitude, longitude))
                     .zoom(15)
@@ -275,6 +304,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             e.printStackTrace();
         }
 
+        //
         MapboxGeocoding reverseGeocode = MapboxGeocoding.builder()
                 .accessToken(Mapbox.getAccessToken())
                 .query(originPosition)
@@ -459,6 +489,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     public void onProviderDisabled(String provider) {
     }
 
+    // setting onclick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -495,11 +526,13 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
+    // Put a toast that app needs permission
     @Override
     public void onExplanationNeeded(List<String> permissionsToExplain) {
         Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
     }
 
+    // If permission granted, enable location
     @Override
     public void onPermissionResult(boolean granted) {
         if (granted) {
@@ -507,13 +540,14 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
+    // Calling the doStuff function
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
         doStuff();
     }
 
-
+    // Starts the map view
     @Override
     @SuppressWarnings({"MissingPermission"})
     protected void onStart() {
@@ -521,57 +555,68 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         mapView.onStart();
     }
 
+
+    // Resumes the map view
     @Override
     protected void onResume() {
         super.onResume();
         mapView.onResume();
     }
 
+    // Holds the mapview on pause
     @Override
     protected void onPause() {
         super.onPause();
         mapView.onPause();
     }
 
+    // Stops the map fucntionality
     @Override
     protected void onStop() {
         super.onStop();
         mapView.onStop();
     }
 
+    // save the current instance of map
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
 
+    // Throws an error of low memory
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
     }
 
+    // Destroying the navigation window
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //mapView.onDestroy();
     }
 
+    //predefined functions of Navigation
     @Override
     public void onCancelNavigation() {
         finish();
     }
 
+    //predefined functions of Navigation
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+    //predefined functions of Navigation
     @Override
     public void onNavigationFinished() {
         finish();
     }
 
+    //predefined functions of Navigation
     @Override
     public void onNavigationRunning() {
     }
