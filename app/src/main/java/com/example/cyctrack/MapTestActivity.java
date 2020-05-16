@@ -41,6 +41,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -133,7 +134,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         // To get instance with help of Mapbox access token
         Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.activity_map_test);
-
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // Casting variables to map to xml file
         mapView = findViewById(R.id.mapView);
         startButton = findViewById(R.id.startbutton);
@@ -210,7 +211,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             public void afterTextChanged(Editable s) {
             }
         });
-        tv_ballon.setPaintFlags(tv_ballon.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        tv_ballon.setPaintFlags(tv_ballon.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         Balloon balloon = new Balloon.Builder(getApplicationContext())
                 .setArrowSize(15)
@@ -504,7 +505,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();
-            } else {
+            } else if (nCurrentSpeed > 10 && nCurrentSpeed <= 30) {
                 LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.custom_toast,
                         (ViewGroup) findViewById(R.id.toast_layout));
@@ -550,7 +551,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                         .origin(originPosition)
                         .destination(destinationPosition)
                         .directionsProfile(DirectionsCriteria.PROFILE_CYCLING)
-                        .shouldSimulateRoute(true)
+                        .shouldSimulateRoute(false)
                         .build();
                 NavigationLauncher.startNavigation(MapTestActivity.this, options);
                 //  Intent i = new Intent(MapTestActivity.this, MapNavActivity.class);

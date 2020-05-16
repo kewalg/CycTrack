@@ -12,10 +12,11 @@
         android:layout_below="@id/btn_back_listitems"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="Submitted Reviews"
         android:textColor="#fff"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/lv_items"
@@ -35,6 +36,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/housing1"
-        android:fontFamily="@font/open_sans" />
+        android:fontFamily="@font/open_sans"
+        android:foreground="?android:attr/selectableItemBackground" />
 
 </RelativeLayout>

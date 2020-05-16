@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/testbg1gimpblur">
+    android:background="@drawable/bgforsafety">
 
     <TextView
         android:id="@+id/tv_heading1"
@@ -10,10 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/open_sans"
-        android:text="Are You Forgetting Something??"
+        android:fontFamily="@font/rajdhani"
+        android:text="Safety Checklist"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -32,11 +33,12 @@
         android:layout_marginTop="45dp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:checkMarkTint="@color/ui_color"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:gravity="center"
         android:text="Helmet"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 
     <CheckedTextView
@@ -47,11 +49,12 @@
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:checkMarkTint="@color/ui_color"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:gravity="center"
         android:text="Lights"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 
     <CheckedTextView
@@ -62,11 +65,12 @@
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:checkMarkTint="@color/ui_color"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:gravity="center"
         android:text="Knee-Pads"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 
     <CheckedTextView
@@ -77,11 +81,12 @@
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:checkMarkTint="@color/ui_color"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:gravity="center"
         android:text="Arm Guards"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 
     <CheckedTextView
@@ -92,11 +97,12 @@
         android:layout_centerHorizontal="true"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:checkMarkTint="@color/ui_color"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:gravity="center"
         android:text="Visibility Jacket"
         android:textColor="#fff"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

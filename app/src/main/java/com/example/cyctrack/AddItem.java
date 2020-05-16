@@ -1,6 +1,7 @@
 package com.example.cyctrack;
 
 // Importing required modules
+
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -31,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cyctrack.Model.Main;
+import com.example.cyctrack.Model.Weather;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,7 +106,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                     public void onResponse(String response) {
                         loading.dismiss();
                         Toast.makeText(AddItem.this, response, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
                         startActivity(intent);
                     }
                 },

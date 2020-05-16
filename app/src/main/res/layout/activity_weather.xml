@@ -14,10 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="Hi, Whats'up!?"
         android:textColor="#fff"
-        android:textSize="50dp" />
+        android:textSize="50dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtCity"
@@ -26,7 +27,7 @@
         android:layout_below="@id/tv_title_weather"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="City"
         android:textColor="#fff"
         android:textSize="35sp"
@@ -39,7 +40,7 @@
         android:layout_below="@id/txtCity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="Temperature"
         android:textColor="#fff"
         android:textSize="25sp"
@@ -53,7 +54,7 @@
         android:layout_below="@id/txtCelsius"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="Forecast"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -65,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtDescription"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="Humidity"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -79,7 +80,7 @@
         android:layout_below="@id/txtHumidity"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/open_sans" />
+        android:fontFamily="@font/rajdhani" />
 
     <TextView
         android:id="@+id/tv_settext"
@@ -87,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="Prediction"
         android:textColor="#fff"
         android:textSize="20sp"
@@ -103,13 +104,15 @@
         android:layout_toLeftOf="@id/tv_for_centre"
         android:background="@drawable/button_selector2"
         android:drawableTop="@drawable/mapicon"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
+        android:foreground="?android:attr/selectableItemBackground"
         android:paddingLeft="30dp"
         android:paddingTop="10dp"
         android:paddingRight="30dp"
         android:paddingBottom="5dp"
         android:text="Start Ride"
-        android:textColor="#fff" />
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_for_centre"
@@ -129,13 +132,15 @@
         android:layout_toRightOf="@id/tv_for_centre"
         android:background="@drawable/button_selector2"
         android:drawableTop="@drawable/feedbackicon"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
+        android:foreground="?android:attr/selectableItemBackground"
         android:paddingLeft="30dp"
         android:paddingTop="10dp"
         android:paddingRight="30dp"
         android:paddingBottom="5dp"
         android:text="Feedbacks"
-        android:textColor="#fff" />
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_aboutus"
@@ -145,9 +150,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="About Us"
-        android:textColor="#fff"
+        android:textColor="@color/ui_color"
         android:textStyle="bold" />
 
 </RelativeLayout>

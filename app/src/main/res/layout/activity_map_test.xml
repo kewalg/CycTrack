@@ -28,7 +28,7 @@
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@id/btn_submit"
         android:backgroundTint="#fff"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:hint="Enter address"
         android:inputType="textCapWords"
         android:padding="10dp"
@@ -47,6 +47,7 @@
         android:layout_marginRight="5dp"
         android:background="@drawable/communications"
         android:fontFamily="@font/open_sans"
+        android:foreground="?android:attr/selectableItemBackground"
         android:textColor="#fff" />
 
     <Button
@@ -59,9 +60,11 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_selector1"
         android:enabled="false"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Start Navigation"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:textStyle="bold" />
 
 
     <Button
@@ -73,7 +76,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/housing1"
-        android:fontFamily="@font/open_sans" />
+        android:fontFamily="@font/open_sans"
+        android:foreground="?android:attr/selectableItemBackground" />
 
 
     <androidx.appcompat.widget.SwitchCompat
@@ -118,13 +122,16 @@
         android:id="@+id/btn_review_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_above="@id/startbutton"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/button_selector1"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Review Route"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:textStyle="bold" />
 
 </RelativeLayout>

@@ -18,6 +18,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,7 +40,7 @@ import java.lang.reflect.Type;
 public class WeatherActivity extends AppCompatActivity implements LocationListener {
 
     // Declaring variables
-    TextView txtCity, txtDescription, txtHumidity, txtCelsius, tvSettext, tvAboutus;
+    TextView txtCity, txtDescription, txtHumidity, txtCelsius, tvSettext, tvAboutus, tvTitle;
     Button btn_maps, btn_feedback;
     ImageView imageView;
 
@@ -59,6 +62,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         txtDescription = (TextView) findViewById(R.id.txtDescription);
         txtHumidity = (TextView) findViewById(R.id.txtHumidity);
         txtCelsius = (TextView) findViewById(R.id.txtCelsius);
+        tvTitle = findViewById(R.id.tv_title_weather);
         imageView = (ImageView) findViewById(R.id.imageView);
         tvSettext = findViewById(R.id.tv_settext);
         tvAboutus = findViewById(R.id.tv_aboutus);
@@ -243,10 +247,9 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
             // If current weather description is clear sky or few clouds, set textview to good day to ride
             if (txtDescription.getText().toString().matches("clear sky") || txtDescription.getText().toString().matches("few clouds")) {
-
                 tvSettext.setText("It is a good day to ride !!");
 
-                // If current weather condition is anythjing else then set textview as not a good day to ride
+                // If current weather condition is anything else then set textview as not a good day to ride
             } else {
                 tvSettext.setText("It is unsafe to ride today !!");
             }

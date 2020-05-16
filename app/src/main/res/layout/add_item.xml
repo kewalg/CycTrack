@@ -10,10 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="Review Your Route"
         android:textColor="#fff"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_source_route"
@@ -21,21 +22,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:text="test"
         android:textColor="#fff"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_dest_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_source_route"
+
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text=" test"
         android:textColor="#fff"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
 
     <EditText
@@ -46,12 +51,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="250dp"
         android:backgroundTint="#ea1646"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:hint="Enter your name"
         android:textColor="#fff"
         android:textColorHighlight="#fff"
         android:textColorHint="#fff"
-        android:textColorLink="#fff" />
+        android:textColorLink="#fff"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editFeedback"
@@ -60,13 +66,14 @@
         android:layout_below="@id/editName"
         android:layout_centerHorizontal="true"
         android:backgroundTint="#ea1646"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
         android:hint="Comment here please"
         android:textColor="#fff"
         android:textColorHighlight="#fff"
         android:textColorHint="#fff"
+        android:textColorLink="#fff"
 
-        android:textColorLink="#fff" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -84,10 +91,12 @@
         android:layout_marginRight="161dp"
         android:layout_marginBottom="236dp"
         android:background="@drawable/button_selector1"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="@font/rajdhani"
+        android:foreground="?android:attr/selectableItemBackground"
         android:padding="10dp"
         android:text="submit"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:textStyle="bold" />
 
     <RatingBar
         android:id="@+id/ratingBar"
