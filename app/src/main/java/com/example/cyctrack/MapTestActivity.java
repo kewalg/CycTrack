@@ -211,8 +211,11 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             public void afterTextChanged(Editable s) {
             }
         });
+
+        // Underlining the About us Textview
         tv_ballon.setPaintFlags(tv_ballon.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+        // Using ballon library to show a pop up When user clicks on DND mode to explain its functionality
         Balloon balloon = new Balloon.Builder(getApplicationContext())
                 .setArrowSize(15)
                 .setArrowOrientation(ArrowOrientation.BOTTOM)
@@ -230,6 +233,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 .build();
 
 
+        // Setting the ballon on when clicked for 2 sec
         tv_ballon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -349,25 +353,31 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             e.printStackTrace();
         }
 
-        //
+        // getting the geocodes by taking in the address of the location
         MapboxGeocoding reverseGeocode = MapboxGeocoding.builder()
                 .accessToken(Mapbox.getAccessToken())
                 .query(originPosition)
                 .geocodingTypes(GeocodingCriteria.TYPE_ADDRESS)
                 .build();
+
+        // USing reverse geocode function
         reverseGeocode.enqueueCall(new Callback<GeocodingResponse>() {
             @Override
             public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
                 List<CarmenFeature> results = response.body().features();
                 if (results.size() > 0) {
+
+                    // Accessing the index place 0 to get the short and complete place Name
                     String source_address_complete = response.body().features().get(0).placeName();
                     String source_address_short = response.body().features().get(0).text();
 
+                    // Using shared preferences to share the source location
                     sharedPreferences = getSharedPreferences("Source_key", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("Source_key_value", source_address_short);
                     editor.apply();
 
+                    // Checking for short and complete source address by logcat
                     Point firstResultPoint = results.get(0).center();
                     //Log.d(TAG, "onResponse: " + firstResultPoint.coordinates());
                     Log.d(TAG, "onResponse: " + source_address_short);
@@ -384,6 +394,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         });
     }
 
+    // Making Map box ready to go by enabling location
     @Override
     public void onMapReady(MapboxMap mapboxMap) {
         Log.d(TEST, "onMapReady");
@@ -391,6 +402,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         enableLocation();
     }
 
+    // Asking permission for location access
     private void enableLocation() {
         Log.d(TEST, "enableLocation");
         if (permissionsManager.areLocationPermissionsGranted(this)) {
@@ -405,6 +417,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         Log.d(TAG, "enable Location");
     }
 
+    // Get the best accuracy location by activating location engine
     @SuppressWarnings("MissingPermission")
     private void initializeLocationEngine() {
         Log.d(TEST, "initializeLocationEngine");
@@ -412,6 +425,8 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         locationEngine.setPriority(LocationEnginePriority.HIGH_ACCURACY);
         locationEngine.activate();
 
+
+        // If location engine is null set it to last known location
         if (locationEngine == null)
             Log.d(TEST, "LocationEngine is null");
         Location lastLocation = locationEngine.getLastLocation();
@@ -426,6 +441,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         Log.d(TAG, "initialize location Engine");
     }
 
+    // Setting up the camera by enabling location layer
     @SuppressWarnings("MissingPermission")
     private void initializeLocationLayer() {
         locationLayerPlugin = new LocationLayerPlugin(mapView, map, locationEngine);
@@ -441,14 +457,25 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
 
+    // here the navigation starts by taking in source and destination points
     private void getRoute(Point origin, Point destination) {
+
+        // Drawing a route from source to dest
         NavigationRoute.builder()
+
+                // Accessing the token
                 .accessToken(Mapbox.getAccessToken())
+
+                // Setting source and dest
                 .origin(origin).destination(destination)
+
+                // Building the route
                 .build()
                 .getRoute(new Callback<DirectionsResponse>() {
                     @Override
                     public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+
+                        // If no response display no route found
                         if (response.body() == null) {
                             Log.e(TAG, "No Routes Found,Check right user and access token");
                             return;
@@ -456,6 +483,8 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                             Log.e(TAG, "No Route");
                             return;
                         }
+
+                        // Or else access zeroth index of response route and add route to navigation builder
                         DirectionsRoute currentRoute = response.body().routes().get(0);
                         if (navigationMapRoute != null) {
                             navigationMapRoute.removeRoute();
@@ -478,6 +507,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         locationEngine.requestLocationUpdates();
     }
 
+    // Everytime the location changes update current location as user location
     public void onLocationChanged(Location location) {
         if (location != null) {
             originLocation = location;
@@ -485,26 +515,44 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             //  setCameraPosition(location);
         }
 
+        // Setting the medial player for alert sound
         final MediaPlayer speedAlertPlayer = MediaPlayer.create(MapTestActivity.this, R.raw.speedalert);
         if (location == null) {
+
+            // If location is null, set speed as -.-
             tv_speedtest.setText("-.- km/h");
         } else {
+
+            // Else calculate the current speed
             float nCurrentSpeed = location.getSpeed() * 3.6f;
+
+            // Set the current speed to a text view
             tv_speedtest.setText(String.format("%.2f", nCurrentSpeed) + " km/h");
             //Toast.makeText(this, "Current Speed is: " + (String.format("%.2f", nCurrentSpeed)), Toast.LENGTH_SHORT).show();
+
+            // If current speed is greater than 30 kmph
             if (nCurrentSpeed > 30.0) {
+
+                // play the alert sound
                 speedAlertPlayer.start();
+
+                // Inflater used to set a toast outside its current activity and can be customized
                 LayoutInflater inflater = getLayoutInflater();
+
+                // for speed greater than 30, set toast as red color
                 View layout = inflater.inflate(R.layout.custom_toast_red,
                         (ViewGroup) findViewById(R.id.toast_layout_red));
                 TextView text = (TextView) layout.findViewById(R.id.text);
                 text.setText((String.format("%.1f", nCurrentSpeed)));
 
+                // Adjusting the position of the toast on the screen
                 Toast toast = new Toast(getApplicationContext());
                 toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 30, -110);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.setView(layout);
                 toast.show();
+
+                // If speed is between 10 and 30 set the color of toast to green
             } else if (nCurrentSpeed > 10 && nCurrentSpeed <= 30) {
                 LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.custom_toast,
@@ -513,6 +561,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 TextView text = (TextView) layout.findViewById(R.id.text);
                 text.setText((String.format("%.1f", nCurrentSpeed)));
 
+                // adjusting toast position on the screen
                 Toast toast = new Toast(getApplicationContext());
                 toast.setGravity(Gravity.CENTER | Gravity.RIGHT, 30, -110);
                 toast.setDuration(Toast.LENGTH_SHORT);
@@ -522,6 +571,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
+    // Implemented default methods of navigation
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
     }
@@ -615,7 +665,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         mapView.onPause();
     }
 
-    // Stops the map fucntionality
+    // Stops the map functionality
     @Override
     protected void onStop() {
         super.onStop();
