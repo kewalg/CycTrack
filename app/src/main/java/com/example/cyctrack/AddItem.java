@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -42,7 +45,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     // Declaring variables
     EditText editName, editFeedback;
     Button btnSubmit;
-    TextView tvRating, tv_source_Route, tv_dest_Route;
+    TextView tvRating, tv_source_Route, tv_dest_Route, tv_title;
     private RatingBar ratingBar;
     private float ratedValue;
 
@@ -57,6 +60,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         editName = findViewById(R.id.editName);
         editFeedback = findViewById(R.id.editFeedback);
         btnSubmit = findViewById(R.id.btnSubmit);
+        tv_title = findViewById(R.id.tv_title);
         tv_source_Route = findViewById(R.id.tv_source_route);
         tv_dest_Route = findViewById(R.id.tv_dest_route);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
@@ -83,6 +87,12 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         SharedPreferences destination_result = getSharedPreferences("Destination_key", Context.MODE_PRIVATE);
         String destination_value = destination_result.getString("Destination_key_value", "Data Not Found");
         tv_dest_Route.setText(destination_value);
+
+        String title = tv_title.getText().toString();
+        SpannableString sstitle = new SpannableString(title);
+        ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+        sstitle.setSpan(uicolor1, 6, 17, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv_title.setText(sstitle);
 
     }
 

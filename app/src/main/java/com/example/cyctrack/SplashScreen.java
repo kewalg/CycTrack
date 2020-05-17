@@ -12,14 +12,13 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.example.cyctrack.Model.Main;
 
 public class SplashScreen extends AppCompatActivity {
     TextView tv_title_splash;
 
-    // setting splash screen timeout to be 2 secs
-    private static int SPLASH_TIME_OUT = 6000;
+    // setting splash screen timeout to be 3 secs
+    private static int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class SplashScreen extends AppCompatActivity {
 
         String title = tv_title_splash.getText().toString();
         SpannableString sstitle = new SpannableString(title);
-        ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.ui_color));
+        ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
         sstitle.setSpan(uicolor1, 7, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv_title_splash.setText(sstitle);
 

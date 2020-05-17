@@ -34,15 +34,24 @@ public class AboutActivity extends AppCompatActivity {
 
         String title = tv_title.getText().toString();
         SpannableString sstitle = new SpannableString(title);
-        ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.ui_color));
+        ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
         sstitle.setSpan(uicolor1, 2, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv_title.setText(sstitle);
 
+
         tv_desc = findViewById(R.id.tv_desc);
         String desc = tv_desc.getText().toString();
+
         SpannableString ssdesc = new SpannableString(desc);
-        ForegroundColorSpan uicolor2 = new ForegroundColorSpan(getResources().getColor(R.color.ui_color));
-        ssdesc.setSpan(uicolor2, 30, 38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        ForegroundColorSpan uicolor2 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+        ForegroundColorSpan uicolor3 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+        ForegroundColorSpan uicolor4 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+
+        ssdesc.setSpan(uicolor2, 31, 39, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssdesc.setSpan(uicolor3, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ssdesc.setSpan(uicolor4, 194, 195, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         tv_desc.setText(ssdesc);
 
         //setting on click action on button which takes to home activity

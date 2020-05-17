@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/border"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 
@@ -15,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/rajdhani"
         android:text="Route: "
-        android:textColor="@color/ui_color"
+        android:textColor="@color/test_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -23,8 +24,9 @@
         android:id="@+id/tv_route_final"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
         android:layout_toRightOf="@id/tv_route_final1"
         android:fontFamily="@font/rajdhani"
         android:text="Route"
@@ -39,7 +41,7 @@
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/rajdhani"
         android:text="Rating: "
-        android:textColor="@color/ui_color"
+        android:textColor="@color/test_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -49,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_route_final"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/tv_rating_final1"
         android:fontFamily="@font/rajdhani"
         android:text="Rating"
@@ -61,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_route_final"
+        android:layout_marginRight="5dp"
         android:layout_toRightOf="@id/tv_rating_final"
         android:fontFamily="@font/rajdhani"
         android:text=" / 5"
@@ -77,7 +80,7 @@
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/rajdhani"
         android:text="Comment: "
-        android:textColor="@color/ui_color"
+        android:textColor="@color/test_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -87,7 +90,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_rating_final"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginBottom="10dp"
         android:layout_toRightOf="@id/tv_feedback_final1"
         android:fontFamily="@font/rajdhani"

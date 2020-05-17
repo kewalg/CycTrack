@@ -4,5 +4,5 @@
     <string name="start_navigating">Start Navigating</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
-    <string name="description">"\"If it's been ridden, it's on CycTrack. CycTrack turns every mobile phone into a sophisticated cycling computer which explores new routes, with safety measures like speed limit alert, DND mode."\"</string>
+    <string name="description">"\" If it's been ridden, it's on CycTrack. CycTrack turns every mobile phone into a sophisticated cycling computer which explores new routes, with safety measures like speed limit alert, DND mode "\"</string>
 </resources>

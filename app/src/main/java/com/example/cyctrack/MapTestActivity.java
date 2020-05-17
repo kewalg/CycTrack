@@ -154,10 +154,18 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         // Setting on click listener on all the buttons on the Map screen
         startButton.setOnClickListener(this);
         btn_submit.setOnClickListener(this);
-        btn_home.setOnClickListener(this);
         btn_review.setOnClickListener(this);
         tv_ballon.setOnClickListener(this);
 
+
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(MapTestActivity.this, WeatherActivity.class);
+                startActivity(i);
+            }
+        });
 
         // Implementing a toggle button for DND functionality
         tglbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -169,11 +177,14 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 if (isChecked) {
                     changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
                     Toast.makeText(MapTestActivity.this, "DND Enabled!", Toast.LENGTH_SHORT).show();
+
+
                 } else {
 
                     // If the toggle button isnt check, then interrupt accessing the notification manager
                     changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_ALL);
                     Toast.makeText(MapTestActivity.this, "DND Disabled!", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -195,12 +206,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
             // If the edit text to enter destination address is empty set usability of the buttons as false
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().trim().length() == 0) {
-                    btn_review.setEnabled(false);
-                    btn_submit.setEnabled(false);
-                } else {
-
-                    // As user types anything in the address bar, length is greater than zero and hence enable the buttons
+                if (s.toString().trim().length() > 0) {
                     btn_review.setEnabled(true);
                     btn_submit.setEnabled(true);
                 }
@@ -609,10 +615,6 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
                 break;
             }
 
-            case R.id.homeBtn: {
-                Intent i = new Intent(MapTestActivity.this, WeatherActivity.class);
-                startActivity(i);
-            }
             case R.id.btn_review_route: {
                 Intent i = new Intent(MapTestActivity.this, AddItem.class);
                 startActivity(i);

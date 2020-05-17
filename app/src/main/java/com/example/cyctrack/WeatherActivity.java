@@ -120,6 +120,15 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
         });
 
         tvAboutus.setPaintFlags(tvAboutus.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+
+        String title = tvTitle.getText().toString();
+        SpannableString sstitle = new SpannableString(title);
+        ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+        sstitle.setSpan(uicolor1, 5, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvTitle.setText(sstitle);
+
+
     }
 
     // ASk permission for location services
@@ -248,10 +257,20 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
             // If current weather description is clear sky or few clouds, set textview to good day to ride
             if (txtDescription.getText().toString().matches("clear sky") || txtDescription.getText().toString().matches("few clouds")) {
                 tvSettext.setText("It is a good day to ride !!");
+                String title = tvSettext.getText().toString();
+                SpannableString sstitle = new SpannableString(title);
+                ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+                sstitle.setSpan(uicolor1, 8, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvSettext.setText(sstitle);
 
                 // If current weather condition is anything else then set textview as not a good day to ride
             } else {
                 tvSettext.setText("It is unsafe to ride today !!");
+                String title1 = tvSettext.getText().toString();
+                SpannableString sstitle1 = new SpannableString(title1);
+                ForegroundColorSpan uicolor2 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+                sstitle1.setSpan(uicolor2, 6, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvSettext.setText(sstitle1);
             }
 
             //// Setting humidity string of the weather condition based on infromation receieved from OPen weatherMap

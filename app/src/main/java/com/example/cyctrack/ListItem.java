@@ -1,15 +1,20 @@
 package com.example.cyctrack;
 
 // Importing necessary modules
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +44,7 @@ public class ListItem extends AppCompatActivity {
     ListAdapter adapter;
     Button backButton;
     ProgressDialog loading;
+    TextView titleSubmissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class ListItem extends AppCompatActivity {
         setContentView(R.layout.list_item);
         listView = findViewById(R.id.lv_items);
         backButton = findViewById(R.id.btn_back_listitems);
+        titleSubmissions = findViewById(R.id.title_submissions);
 
         // calling getItems function
         getItems();
@@ -63,6 +70,13 @@ public class ListItem extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        String title = titleSubmissions.getText().toString();
+        SpannableString sstitle = new SpannableString(title);
+        ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
+        sstitle.setSpan(uicolor1, 9, 17, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        titleSubmissions.setText(sstitle);
+
     }
 
     // Initialize getItems() with progress dialog box and provide GAS url
