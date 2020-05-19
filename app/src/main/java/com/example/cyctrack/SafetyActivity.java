@@ -39,6 +39,8 @@ public class SafetyActivity extends AppCompatActivity {
         // Casting variables with connection to xml file
         progressBar = findViewById(R.id.progressBar);
         checkedview1 = findViewById(R.id.ctv1);
+
+
         // Setting the check box to be ticked
         checkedview1.setChecked(true);
         checkedview2 = findViewById(R.id.ctv2);
@@ -54,7 +56,7 @@ public class SafetyActivity extends AppCompatActivity {
             public void run() {
                 while(progressStatus <100){
                     progressStatus++;
-                    android.os.SystemClock.sleep(15);
+                    android.os.SystemClock.sleep(25);
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -66,13 +68,6 @@ public class SafetyActivity extends AppCompatActivity {
 
             }
         }).start();
-
-
-
-
-
-
-
 
         // when time runs out, putting an intent to go to Map activity
         new Handler().postDelayed(new Runnable() {
