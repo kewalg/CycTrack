@@ -522,7 +522,7 @@ public class MapTestActivity extends AppCompatActivity implements OnMapReadyCall
         }
 
         // Setting the medial player for alert sound
-        final MediaPlayer speedAlertPlayer = MediaPlayer.create(MapTestActivity.this, R.raw.speedalert);
+        final MediaPlayer speedAlertPlayer = MediaPlayer.create(MapTestActivity.this, R.raw.overspeedalert);
         if (location == null) {
 
             // If location is null, set speed as -.-

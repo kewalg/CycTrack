@@ -256,7 +256,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
             // If current weather description is clear sky or few clouds, set textview to good day to ride
             if (txtDescription.getText().toString().matches("clear sky") || txtDescription.getText().toString().matches("few clouds")) {
-                tvSettext.setText("It is a good day to ride !!");
+                tvSettext.setText("It is SAFE to ride today !!");
                 String title = tvSettext.getText().toString();
                 SpannableString sstitle = new SpannableString(title);
                 ForegroundColorSpan uicolor1 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
@@ -265,7 +265,7 @@ public class WeatherActivity extends AppCompatActivity implements LocationListen
 
                 // If current weather condition is anything else then set textview as not a good day to ride
             } else {
-                tvSettext.setText("It is unsafe to ride today !!");
+                tvSettext.setText("It is UNSAFE to ride today !!");
                 String title1 = tvSettext.getText().toString();
                 SpannableString sstitle1 = new SpannableString(title1);
                 ForegroundColorSpan uicolor2 = new ForegroundColorSpan(getResources().getColor(R.color.test_color));
